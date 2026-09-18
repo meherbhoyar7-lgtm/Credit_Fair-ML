@@ -1,0 +1,680 @@
+/* ============================================================
+   Credit Fair — High-Aesthetic Dark Executive / Fintech Theme
+   Featuring JPMorgan Chase 270 Park Ave HQ Video & Floating Glass Dock
+   ============================================================ */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ---------- CSS Custom Properties ---------- */
+:root {
+    /* Dark Cinematic Palette */
+    --bg-primary: #040711;
+    --bg-secondary: #080f1f;
+    --bg-card: rgba(11, 18, 36, 0.72);
+    --bg-card-hover: rgba(17, 27, 52, 0.85);
+    --surface: #17233f;
+    --surface-light: #203156;
+
+    --accent-primary: #38bdf8;    /* Electric Cyan */
+    --accent-secondary: #34d399;  /* Vivid Emerald */
+    --accent-tertiary: #60a5fa;   /* Neon Azure */
+    --accent-warm: #fbbf24;
+    --accent-glow: rgba(56, 189, 248, 0.35);
+
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --text-inverse: #040711;
+
+    --gradient-accent: linear-gradient(135deg, #38bdf8, #2563eb);
+    --gradient-brand: linear-gradient(180deg, #ffffff 30%, #cbd5e1 100%);
+    --gradient-glow: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(37, 99, 235, 0.2));
+
+    --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+    --border-accent: 1px solid rgba(56, 189, 248, 0.3);
+    --border-glass: 1px solid rgba(255, 255, 255, 0.14);
+
+    --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 12px 36px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.8);
+    --shadow-glow: 0 0 35px rgba(56, 189, 248, 0.28);
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-pill: 9999px;
+
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", "Inter", -apple-system-body, system-ui, sans-serif;
+    --font-title: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro", "Inter", -apple-system-body, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--bg-primary);
+}
+
+body {
+    font-family: var(--font-main);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+::selection {
+    background: rgba(56, 189, 248, 0.3);
+    color: #ffffff;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--surface);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-primary);
+}
+
+/* ============================================================
+   GLOBAL FULL-SCREEN BACKGROUND VIDEO (PLAYS ON ALL PAGES)
+   JPMorgan Chase 270 Park Ave HQ (Exterior Night Loop)
+   ============================================================ */
+.video-bg-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.video-bg-wrap video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    filter: none; /* 100% original video, no artificial filters or tinting */
+    pointer-events: none; /* prevent any native browser video UI from appearing */
+}
+
+/* Hide ALL browser-native video controls, overlays, and the centered autoplay-blocked button */
+.video-bg-wrap video::-webkit-media-controls,
+.video-bg-wrap video::-webkit-media-controls-enclosure,
+.video-bg-wrap video::-webkit-media-controls-panel,
+.video-bg-wrap video::-webkit-media-controls-play-button,
+.video-bg-wrap video::-webkit-media-controls-start-playback-button,
+.video-bg-wrap video::-webkit-media-controls-overlay-play-button,
+.video-bg-wrap video::-webkit-media-controls-overlay-enclosure,
+.video-bg-wrap video::-internal-media-controls-button-panel,
+.video-bg-wrap video::-internal-media-controls-overflow-button {
+    display: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.video-overlay-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(4, 7, 17, 0.22) 0%, rgba(4, 7, 17, 0.35) 45%, rgba(4, 7, 17, 0.85) 85%, #040711 100%);
+    pointer-events: none;
+}
+
+.page-inner-body {
+    background: #040711;
+    min-height: 100vh;
+}
+
+.page-inner-body .video-overlay-gradient {
+    background: linear-gradient(180deg, rgba(4, 7, 17, 0.38) 0%, rgba(4, 7, 17, 0.65) 40%, rgba(4, 7, 17, 0.92) 75%, #040711 100%);
+}
+
+/* Lock body on home for 100vh minimalist hero view */
+.page-home-body {
+    overflow: hidden;
+    height: 100vh;
+}
+
+.page-home-body .site-footer {
+    display: none;
+}
+
+/* Site Footer on Inner Pages */
+.site-footer {
+    position: relative;
+    z-index: 10;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(4, 7, 17, 0.78);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 28px 24px;
+    margin-top: 60px;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.footer-logo {
+    font-weight: 800;
+    font-size: 16px;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-tagline {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.footer-meta {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-dot {
+    color: var(--accent-primary);
+    opacity: 0.6;
+}
+
+/* ============================================================
+   APPLE GLOBAL NAVIGATION BAR
+   Ultra-sleek, edge-to-edge frosted glass header bar (Apple.com standard)
+   ============================================================ */
+.apple-global-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 58px;
+    z-index: 1000;
+    background: transparent;
+    border-bottom: none;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-global-nav.nav-scrolled {
+    background: rgba(4, 7, 16, 0.72);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.apple-nav-inner {
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Brand on Left */
+.apple-nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.apple-nav-brand:hover {
+    opacity: 0.85;
+}
+
+.apple-brand-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #38bdf8;
+}
+
+.apple-brand-name {
+    font-family: var(--font-title);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #FFFFFF;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Nav Menu in Center */
+.apple-nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.apple-nav-link {
+    font-family: var(--font-main);
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.82);
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 999px;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-nav-link:hover {
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.7);
+}
+
+.apple-nav-link.active {
+    color: #FFFFFF;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Right Side CTA */
+.apple-nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.apple-nav-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-main);
+    font-size: 12px;
+    font-weight: 500;
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 6px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-nav-cta-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.38);
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+/* ============================================================
+   MAIN CONTENT AREA
+   ============================================================ */
+.content {
+    padding: 96px 48px 80px 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+/* For home page — full-bleed hero */
+.content-home {
+    padding: 0;
+    max-width: none;
+}
+
+
+/* ============================================================
+   PAGE TITLES
+   ============================================================ */
+.page-title {
+    font-family: var(--font-title);
+    font-size: clamp(32px, 3.8vw, 44px);
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(180deg, #FFFFFF 30%, #E2E8F0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.03em;
+}
+
+.page-subtitle {
+    color: var(--text-secondary);
+    font-size: 16px;
+    margin-bottom: 40px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   CARDS (EDA, general)
+   ============================================================ */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+    gap: 28px;
+}
+
+.card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    border: var(--border-glass);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-accent);
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    background: var(--bg-card-hover);
+    box-shadow: var(--shadow-md), var(--shadow-glow);
+    border-color: rgba(56, 189, 248, 0.35);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.chart-placeholder {
+    width: 100%;
+    height: 360px;
+    background: rgba(4, 7, 17, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: var(--border-subtle);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.chart-placeholder img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+}
+
+.chart-caption {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-align: center;
+    font-weight: 500;
+}
+
+/* ============================================================
+   TABLES (Dataset, Preprocessing)
+   ============================================================ */
+.table-container {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-radius: var(--radius-md);
+    border: var(--border-glass);
+    overflow-x: auto;
+    box-shadow: var(--shadow-sm);
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+    text-align: left;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.table-container tr:last-child td {
+    border-bottom: none;
+}
+
+.table-container th {
+    background: rgba(14, 165, 233, 0.05);
+    font-weight: 700;
+    color: var(--accent-primary);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+}
+
+.table-container tr:hover td {
+    background: rgba(14, 165, 233, 0.02);
+}
+
+/* ============================================================
+   BUTTONS (CLASSY APPLE STYLE)
+   ============================================================ */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFFFFF;
+    color: #040711;
+    padding: 13px 32px;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.38);
+    background: #ffffff;
+}
+
+.btn-primary:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #F8FAFC;
+    padding: 12px 30px;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* ============================================================
+   SCROLL REVEAL ANIMATION
+   ============================================================ */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ============================================================
+   KEYFRAME ANIMATIONS
+   ============================================================ */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(14, 165, 233, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(14, 165, 233, 0.6); }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+    .topbar {
+        padding: 0 20px;
+        height: 60px;
+    }
+
+    .navbar ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .content {
+        padding: 150px 20px 60px 20px;
+    }
+
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .logo h1 {
+        font-size: 18px;
+    }
+
+    .subtitle {
+        display: none;
+    }
+
+    .navbar ul li a {
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    .page-title {
+        font-size: 26px;
+    }
+}

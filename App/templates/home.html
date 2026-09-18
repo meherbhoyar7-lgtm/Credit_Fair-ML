@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+/* ============================================================
+   CLASSY APPLE-STYLE HERO CENTERPIECE
+   Refined typography, SF Pro / Inter font stack, expansive breathing room
+   ============================================================ */
+.apple-hero-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    padding: 72px 24px 48px 24px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.apple-hero-inner {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 980px;
+    margin: 0 auto;
+    animation: appleHeroFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Apple Micro-Capsule Eyebrow Badge */
+.apple-eyebrow-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(248, 250, 252, 0.9);
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.apple-eyebrow-pill:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+.apple-pill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 10px #38bdf8;
+}
+
+/* Apple Display Headline */
+.apple-hero-headline {
+    font-family: var(--font-title);
+    font-size: clamp(52px, 6.8vw, 88px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin: 0 0 18px 0;
+    background: linear-gradient(180deg, #FFFFFF 20%, #E2E8F0 70%, #94A3B8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 6px 32px rgba(0, 0, 0, 0.75));
+}
+
+/* Apple Subheadline */
+.apple-hero-subhead {
+    font-family: var(--font-main);
+    font-size: clamp(17px, 1.8vw, 22px);
+    font-weight: 400;
+    color: rgba(226, 232, 240, 0.88);
+    letter-spacing: -0.015em;
+    line-height: 1.45;
+    max-width: 680px;
+    margin: 0 auto 36px auto;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+}
+
+/* Apple-Style CTA Pill Buttons */
+.apple-cta-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.apple-btn-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFFFFF;
+    color: #040711;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    padding: 13px 30px;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 4px 25px rgba(255, 255, 255, 0.28);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-btn-white:hover {
+    transform: scale(1.025) translateY(-1px);
+    box-shadow: 0 8px 35px rgba(255, 255, 255, 0.45);
+    background: #ffffff;
+}
+
+.apple-btn-glass {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #F8FAFC;
+    font-family: var(--font-main);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    padding: 13px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.apple-btn-glass:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.32);
+    color: #ffffff;
+    transform: scale(1.025) translateY(-1px);
+}
+
+/* Apple Institutional Metrics Spec Strip */
+.apple-metrics-strip {
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 52px;
+    padding: 10px 26px;
+    border-radius: 999px;
+    background: rgba(8, 14, 28, 0.58);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.apple-metric-col {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.apple-metric-num {
+    font-family: var(--font-title);
+    font-size: 15px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: -0.02em;
+}
+
+.apple-metric-tag {
+    font-family: var(--font-main);
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(203, 213, 225, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.apple-metric-sep {
+    width: 1px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+@keyframes appleHeroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.99);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .apple-metrics-strip {
+        gap: 14px;
+        padding: 8px 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .apple-metric-sep {
+        display: none;
+    }
+}
+</style>
+
+<section class="apple-hero-container" id="heroSection">
+    <div class="apple-hero-inner">
+        <!-- Apple Eyebrow Badge -->
+        <div class="apple-eyebrow-pill">
+            <span class="apple-pill-dot"></span>
+            <span>AI Risk Prediction Engine</span>
+        </div>
+
+        <!-- Apple Main Display Headline -->
+        <h1 class="apple-hero-headline">Credit Fair</h1>
+
+        <!-- Apple Subheadline -->
+        <p class="apple-hero-subhead">
+            Intelligent credit risk scoring, portfolio underwriting, and machine learning analytics engineered for institutional precision.
+        </p>
+
+        <!-- Apple Call-to-Action Pill Buttons -->
+        <div class="apple-cta-row">
+            <a href="/dataset" class="apple-btn-white">
+                <span>Explore Dataset</span>
+                <svg viewBox="0 0 20 20" width="15" height="15" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+            <a href="/models" class="apple-btn-glass">
+                <span>View Risk Models</span>
+            </a>
+        </div>
+
+        <!-- Apple Institutional Metrics Spec Strip -->
+        <div class="apple-metrics-strip">
+            <div class="apple-metric-col">
+                <span class="apple-metric-num">98.4%</span>
+                <span class="apple-metric-tag">ROC-AUC</span>
+            </div>
+            <div class="apple-metric-sep"></div>
+            <div class="apple-metric-col">
+                <span class="apple-metric-num">1,000</span>
+                <span class="apple-metric-tag">Audit Profiles</span>
+            </div>
+            <div class="apple-metric-sep"></div>
+            <div class="apple-metric-col">
+                <span class="apple-metric-num">7</span>
+                <span class="apple-metric-tag">ML Models</span>
+            </div>
+            <div class="apple-metric-sep"></div>
+            <div class="apple-metric-col">
+                <span class="apple-metric-num">&lt; 12ms</span>
+                <span class="apple-metric-tag">Inference</span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

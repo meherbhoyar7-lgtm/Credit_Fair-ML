@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .eda-header {
+        margin-bottom: 40px;
+    }
+    .eda-header .page-subtitle {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-top: 8px;
+    }
+</style>
+
+<div class="eda-header">
+    <h2 class="page-title">Exploratory Data Analysis</h2>
+    <p class="page-subtitle">Visual insights into the German Credit Dataset</p>
+</div>
+
+<div class="cards-container">
+    <div class="card reveal">
+        <h3>Credit Amount Histogram</h3>
+        <div class="chart-placeholder">
+            <img src="{{ url_for('static', filename='charts/credit_amount_hist.png') }}" alt="Credit Amount Histogram">
+        </div>
+        <p class="chart-caption">Distribution of Credit Amount across all applicants</p>
+    </div>
+
+    <div class="card reveal reveal-delay-1">
+        <h3>Age vs Credit Amount (Scatter)</h3>
+        <div class="chart-placeholder">
+            <img src="{{ url_for('static', filename='charts/scatter.png') }}" alt="Age vs Credit Amount Scatter">
+        </div>
+        <p class="chart-caption">Relationship between Age and Credit Amount</p>
+    </div>
+
+    <div class="card reveal reveal-delay-2">
+        <h3>Credit Amount vs Creditability Box</h3>
+        <div class="chart-placeholder">
+            <img src="{{ url_for('static', filename='charts/credit_amount_box.png') }}" alt="Credit Amount vs Creditability Box">
+        </div>
+        <p class="chart-caption">Credit Amount distribution by Creditability class</p>
+    </div>
+
+    <div class="card reveal reveal-delay-3">
+        <h3>Sex/Marital Status vs Creditability</h3>
+        <div class="chart-placeholder">
+            <img src="{{ url_for('static', filename='charts/Sex_Marital_Status_Creditability.png') }}" alt="Sex/Marital Status vs Creditability">
+        </div>
+        <p class="chart-caption">Creditability breakdown by Sex & Marital Status</p>
+    </div>
+
+    <div class="card reveal">
+        <h3>Correlation Heatmap (3 Attributes)</h3>
+        <div class="chart-placeholder">
+            <img src="{{ url_for('static', filename='charts/correlation_heatmap_3_attributes.png') }}" alt="Correlation Heatmap 3 Attributes">
+        </div>
+        <p class="chart-caption">Correlation between key numerical attributes</p>
+    </div>
+
+    <div class="card reveal reveal-delay-1">
+        <h3>Overall Correlation Heatmap</h3>
+        <div class="chart-placeholder">
+            <img src="{{ url_for('static', filename='charts/correlation_heatmap.png') }}" alt="Overall Correlation Heatmap">
+        </div>
+        <p class="chart-caption">Correlation between all numerical attributes</p>
+    </div>
+</div>
+{% endblock %}

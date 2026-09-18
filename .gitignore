@@ -1,0 +1,11 @@
+.venv/
+venv/
+.idea/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+
+# Excluded subfolders of src
+src/MLmodels/
+src/data/
