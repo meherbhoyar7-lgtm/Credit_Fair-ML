@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .dataset-header {
+        margin-bottom: 40px;
+    }
+    .dataset-header .page-subtitle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .dataset-header .page-subtitle .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-primary);
+        box-shadow: 0 0 8px var(--accent-primary);
+    }
+    .section-block {
+        margin-bottom: 48px;
+        animation: fadeInUp 0.6s ease-out both;
+    }
+    .section-block:nth-child(2) { animation-delay: 0.15s; }
+    .section-block:nth-child(3) { animation-delay: 0.3s; }
+    .section-label {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--accent-primary);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    .section-heading {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        display: inline-block;
+    }
+    .table-container {
+        font-size: 13px;
+        background: var(--bg-card);
+        border-radius: var(--radius-md);
+        overflow-x: auto;
+        padding: 0;
+        border: var(--border-subtle);
+        box-shadow: var(--shadow-sm);
+    }
+    .table-container table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .table-container th, .table-container td {
+        padding: 14px 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+        text-align: left;
+        color: var(--text-secondary);
+        font-size: 13px;
+    }
+    .table-container tr:last-child td { border-bottom: none; }
+    .table-container th {
+        background: rgba(0, 212, 170, 0.05);
+        font-weight: 700;
+        color: var(--accent-primary);
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+    }
+    .table-container tr:hover td {
+        background: rgba(0, 212, 170, 0.03);
+    }
+</style>
+
+<div class="dataset-header">
+    <h2 class="page-title">Dataset Loading</h2>
+    <p class="page-subtitle">
+        <span class="status-dot"></span>
+        The credit dataset has been loaded successfully.
+    </p>
+</div>
+
+<div class="section-block reveal">
+    <div class="section-label">// Summary</div>
+    <h3 class="section-heading">Dataset Summary</h3>
+    <div class="table-container">
+        {{ summary|safe }}
+    </div>
+</div>
+
+<div class="section-block reveal reveal-delay-1">
+    <div class="section-label">// Preview</div>
+    <h3 class="section-heading">Data Preview (First 5 Rows)</h3>
+    <div class="table-container">
+        {{ first_rows|safe }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,1334 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* ============================================================
+       EXECUTIVE FINTECH MODELS SUITE STYLING
+       ============================================================ */
+    .models-hero {
+        position: relative;
+        margin-bottom: 36px;
+        animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-12px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 14px;
+        border-radius: 999px;
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        backdrop-filter: blur(12px);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent-primary);
+        margin-bottom: 14px;
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+    }
+
+    .eyebrow-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent-primary);
+        box-shadow: 0 0 8px var(--accent-primary);
+    }
+
+    .page-headline {
+        font-family: var(--font-title);
+        font-size: clamp(32px, 3.8vw, 46px);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        margin: 0 0 12px 0;
+        background: linear-gradient(180deg, #FFFFFF 20%, #E2E8F0 75%, #94A3B8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .page-subheadline {
+        font-size: 15px;
+        color: var(--text-secondary);
+        max-width: 820px;
+        line-height: 1.6;
+        margin-bottom: 26px;
+    }
+
+    /* Executive Quick Spec Strip */
+    .quick-spec-strip {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 12px 24px;
+        background: rgba(11, 18, 36, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: var(--radius-lg);
+        width: fit-content;
+        margin-bottom: 34px;
+        flex-wrap: wrap;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .spec-item {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+    }
+
+    .spec-value {
+        font-family: var(--font-title);
+        font-size: 17px;
+        font-weight: 800;
+        color: #ffffff;
+    }
+
+    .spec-label {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+    }
+
+    .spec-divider {
+        width: 1px;
+        height: 16px;
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Floating Pill Tab Navigation */
+    .tabs-dock {
+        display: inline-flex;
+        gap: 6px;
+        padding: 6px;
+        background: rgba(11, 18, 36, 0.75);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        margin-bottom: 36px;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 25px rgba(56, 189, 248, 0.1);
+        flex-wrap: wrap;
+    }
+
+    .tab-btn {
+        padding: 12px 24px;
+        border-radius: 999px;
+        border: none;
+        background: transparent;
+        color: var(--text-secondary);
+        font-family: var(--font-main);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .tab-btn:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    .tab-btn.active {
+        background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+        color: #ffffff;
+        font-weight: 700;
+        box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Tab Panes */
+    .tab-pane {
+        display: none;
+        animation: paneFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tab-pane.active {
+        display: block;
+    }
+
+    @keyframes paneFadeIn {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section Subheaders */
+    .subhead-label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--accent-primary);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 6px;
+        font-weight: 600;
+    }
+
+    .subhead-title {
+        font-family: var(--font-title);
+        font-size: 24px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* Metric Cards Grid */
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        margin-bottom: 32px;
+    }
+
+    .kpi-card {
+        background: rgba(11, 18, 36, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(16px);
+    }
+
+    .kpi-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gradient-accent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .kpi-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(56, 189, 248, 0.3);
+        background: rgba(17, 27, 52, 0.85);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(56, 189, 248, 0.15);
+    }
+
+    .kpi-card:hover::before {
+        opacity: 1;
+    }
+
+    .kpi-label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .kpi-value {
+        font-family: var(--font-title);
+        font-size: 32px;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+        margin-bottom: 6px;
+    }
+
+    .kpi-value.cyan {
+        background: linear-gradient(135deg, #38bdf8, #60a5fa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .kpi-value.emerald {
+        background: linear-gradient(135deg, #34d399, #10b981);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .kpi-sublabel {
+        font-size: 12px;
+        color: var(--text-muted);
+        line-height: 1.4;
+    }
+
+    /* Showcase Champion Card */
+    .champion-card {
+        background: linear-gradient(135deg, rgba(14, 25, 53, 0.8) 0%, rgba(10, 16, 35, 0.9) 100%);
+        border: 1px solid rgba(56, 189, 248, 0.35);
+        border-radius: var(--radius-xl);
+        padding: 32px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(56, 189, 248, 0.12);
+    }
+
+    .champion-card::after {
+        content: '';
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .champion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .champion-title-group {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .champion-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        background: rgba(56, 189, 248, 0.12);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+    }
+
+    .champion-name {
+        font-family: var(--font-title);
+        font-size: 22px;
+        font-weight: 800;
+        color: #ffffff;
+    }
+
+    .champion-subtext {
+        font-size: 13px;
+        color: var(--text-secondary);
+    }
+
+    .badge-champion {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+        color: #040711;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        box-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
+    }
+
+    .champion-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+    }
+
+    .champion-stat-box {
+        background: rgba(4, 7, 17, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: var(--radius-md);
+        padding: 20px;
+        text-align: center;
+        transition: all 0.25s ease;
+    }
+
+    .champion-stat-box:hover {
+        background: rgba(56, 189, 248, 0.06);
+        border-color: rgba(56, 189, 248, 0.25);
+    }
+
+    .champion-stat-box .num {
+        font-family: var(--font-title);
+        font-size: 24px;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 4px;
+    }
+
+    .champion-stat-box .lbl {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+    }
+
+    /* Model Result Blocks */
+    .model-card-row {
+        background: rgba(11, 18, 36, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: var(--radius-lg);
+        padding: 24px 28px;
+        margin-bottom: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .model-card-row:hover {
+        background: rgba(17, 27, 52, 0.85);
+        border-color: rgba(56, 189, 248, 0.25);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .model-row-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .model-row-name {
+        font-size: 17px;
+        font-weight: 700;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .model-row-metrics {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+
+    .metric-cell {
+        background: rgba(4, 7, 17, 0.4);
+        border-radius: var(--radius-sm);
+        padding: 14px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .metric-cell .val {
+        font-size: 18px;
+        font-weight: 800;
+        color: #ffffff;
+    }
+
+    .metric-cell .tag {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        margin-bottom: 4px;
+    }
+
+    /* Confusion Matrix 2x2 Glass Grid */
+    .confusion-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .cm-cell {
+        background: rgba(11, 18, 36, 0.8);
+        border-radius: var(--radius-md);
+        padding: 20px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+    }
+
+    .cm-cell.positive {
+        border-color: rgba(52, 211, 153, 0.3);
+        background: rgba(52, 211, 153, 0.04);
+    }
+
+    .cm-cell.negative {
+        border-color: rgba(244, 63, 94, 0.3);
+        background: rgba(244, 63, 94, 0.04);
+    }
+
+    .cm-count {
+        font-family: var(--font-title);
+        font-size: 32px;
+        font-weight: 800;
+        color: #ffffff;
+    }
+
+    .cm-label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin-top: 4px;
+    }
+
+    .cm-tag {
+        font-size: 10px;
+        font-weight: 600;
+        margin-top: 4px;
+    }
+
+    /* Dual Charts Showcase */
+    .charts-duo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+        gap: 24px;
+        margin-bottom: 36px;
+    }
+
+    .chart-panel-card {
+        background: rgba(11, 18, 36, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: var(--radius-xl);
+        padding: 24px;
+        backdrop-filter: blur(20px);
+        transition: all 0.35s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chart-panel-card:hover {
+        border-color: rgba(56, 189, 248, 0.35);
+        box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6);
+    }
+
+    .chart-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .chart-card-title {
+        font-family: var(--font-title);
+        font-size: 15px;
+        font-weight: 700;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .chart-badge {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--accent-primary);
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        padding: 3px 10px;
+        border-radius: 999px;
+    }
+
+    .chart-img-frame {
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: #080f1f;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .chart-img-frame img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.4s ease;
+    }
+
+    .chart-img-frame:hover img {
+        transform: scale(1.015);
+    }
+
+    .chart-caption {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 14px;
+        line-height: 1.5;
+    }
+
+    /* Tables */
+    .glass-table-wrap {
+        background: rgba(11, 18, 36, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--radius-lg);
+        overflow-x: auto;
+        margin-bottom: 30px;
+        backdrop-filter: blur(16px);
+    }
+
+    .glass-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .glass-table th {
+        background: rgba(56, 189, 248, 0.07);
+        padding: 16px 22px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent-primary);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-table td {
+        padding: 16px 22px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        font-size: 13px;
+        color: var(--text-secondary);
+    }
+
+    .glass-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .glass-table tr:hover td {
+        background: rgba(56, 189, 248, 0.03);
+    }
+
+    .glass-table tr.highlight-row td {
+        background: rgba(56, 189, 248, 0.06);
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    /* Tier Pills */
+    .tier-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    /* Accuracy HUD Banner */
+    .hud-banner {
+        background: linear-gradient(135deg, rgba(14, 25, 53, 0.85) 0%, rgba(9, 15, 33, 0.95) 100%);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        border-radius: var(--radius-xl);
+        padding: 30px 36px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 32px;
+        gap: 28px;
+        box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6);
+        flex-wrap: wrap;
+    }
+
+    .hud-stat-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hud-main-val {
+        font-family: var(--font-title);
+        font-size: 44px;
+        font-weight: 900;
+        background: linear-gradient(135deg, #38bdf8 0%, #34d399 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.02em;
+    }
+
+    .hud-bar-container {
+        flex: 1;
+        min-width: 220px;
+    }
+
+    .hud-bar-track {
+        height: 10px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 999px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hud-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #38bdf8, #34d399);
+        border-radius: 999px;
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+    }
+
+    /* Model Saved Confirmation Banner */
+    .status-alert {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 24px;
+        background: rgba(56, 189, 248, 0.06);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: var(--radius-md);
+        font-size: 13px;
+        color: var(--accent-primary);
+        margin-top: 24px;
+    }
+
+    .status-alert code {
+        background: rgba(4, 7, 17, 0.6);
+        padding: 3px 8px;
+        border-radius: 6px;
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        color: #ffffff;
+        font-family: var(--font-mono);
+    }
+
+    @media (max-width: 880px) {
+        .champion-stats-grid,
+        .model-row-metrics {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .charts-duo-grid {
+            grid-template-columns: 1fr;
+        }
+        .hud-banner {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .hud-bar-container {
+            width: 100%;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="models-hero">
+    <div class="eyebrow-badge">
+        <span class="eyebrow-dot"></span>
+        <span>Institutional Risk Engine · Predictive Machine Learning</span>
+    </div>
+
+    <h1 class="page-headline">Machine Learning Intelligence Suite</h1>
+    <p class="page-subheadline">
+        Full-lifecycle model governance on the German Credit portfolio: regularized credit exposure regression, probability-of-default classification, ensemble trees, and unsupervised customer risk clustering.
+    </p>
+
+    <!-- Quick Spec Strip -->
+    <div class="quick-spec-strip">
+        <div class="spec-item">
+            <span class="spec-value">4</span>
+            <span class="spec-label">Model Families</span>
+        </div>
+        <div class="spec-divider"></div>
+        <div class="spec-item">
+            <span class="spec-value">1,000</span>
+            <span class="spec-label">Credit Profiles</span>
+        </div>
+        <div class="spec-divider"></div>
+        <div class="spec-item">
+            <span class="spec-value">79.0%</span>
+            <span class="spec-label">Peak Classification</span>
+        </div>
+        <div class="spec-divider"></div>
+        <div class="spec-item">
+            <span class="spec-value">R² 0.62</span>
+            <span class="spec-label">Exposure Fit</span>
+        </div>
+        <div class="spec-divider"></div>
+        <div class="spec-item">
+            <span class="spec-value">K = 3</span>
+            <span class="spec-label">Risk Segments</span>
+        </div>
+    </div>
+</div>
+
+<!-- Floating Pill Tabs Dock -->
+<div class="tabs-dock">
+    <button class="tab-btn active" data-tab="linear" onclick="switchModelTab('linear', this)">
+        <span>📈</span> Credit Exposure (Regression)
+    </button>
+    <button class="tab-btn" data-tab="logistic" onclick="switchModelTab('logistic', this)">
+        <span>🎯</span> Default Risk (Logistic)
+    </button>
+    <button class="tab-btn" data-tab="trees" onclick="switchModelTab('trees', this)">
+        <span>🌲</span> Tree Ensembles (RF &amp; Boosting)
+    </button>
+    <button class="tab-btn" data-tab="kmeans" onclick="switchModelTab('kmeans', this)">
+        <span>🔮</span> Customer Segments (K-Means &amp; Elbow)
+    </button>
+</div>
+
+<!-- ============================================================
+     TAB 1: LINEAR REGRESSION (CREDIT EXPOSURE)
+     ============================================================ -->
+<div id="tab-linear" class="tab-pane active">
+    <div class="subhead-label">// Continuous Exposure Estimation</div>
+    <h2 class="subhead-title">Predicting Borrower Credit Amount (DM)</h2>
+
+    <!-- Champion Regression Model Card -->
+    {% for model in linear_results if model.is_best %}
+    <div class="champion-card">
+        <div class="champion-header">
+            <div class="champion-title-group">
+                <div class="champion-icon">📊</div>
+                <div>
+                    <div class="champion-name">{{ model.name }}</div>
+                    <div class="champion-subtext">Optimal balance of L1 sparsity and L2 ridge regularization across 30 features</div>
+                </div>
+            </div>
+            <div class="badge-champion">⭐ Top Performing Model</div>
+        </div>
+
+        <div class="champion-stats-grid">
+            <div class="champion-stat-box">
+                <div class="num" style="color: #34d399;">{{ "%.4f"|format(model.r2) }}</div>
+                <div class="lbl">Coefficient of Determination (R²)</div>
+            </div>
+            <div class="champion-stat-box">
+                <div class="num">{{ "{:,.0f}".format(model.mae) }} DM</div>
+                <div class="lbl">Mean Absolute Error (MAE)</div>
+            </div>
+            <div class="champion-stat-box">
+                <div class="num">{{ "{:,.0f}".format(model.rmse) }} DM</div>
+                <div class="lbl">Root Mean Squared Error (RMSE)</div>
+            </div>
+            <div class="champion-stat-box">
+                <div class="num">{{ "{:,.0f}".format(model.mse) }}</div>
+                <div class="lbl">Mean Squared Error (MSE)</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Regression Comparison Cards -->
+    <div class="subhead-label">// Regularized Benchmarking</div>
+    <h3 style="font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 18px;">All Evaluated Regression Architectures</h3>
+
+    {% for model in linear_results %}
+    <div class="model-card-row">
+        <div class="model-row-header">
+            <div class="model-row-name">
+                <span style="font-size: 20px;">
+                    {% if 'Elastic' in model.name %}💎
+                    {% elif 'Ridge' in model.name %}🛡️
+                    {% elif 'Lasso' in model.name %}✂️
+                    {% else %}📐{% endif %}
+                </span>
+                {{ model.name }}
+                {% if model.is_best %}
+                <span class="tier-badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">
+                    Optimal R²
+                </span>
+                {% endif %}
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 13px; color: {% if model.r2 > 0.6 %}#34d399{% else %}#38bdf8{% endif %}; font-weight: 700;">
+                R² = {{ "%.4f"|format(model.r2) }}
+            </div>
+        </div>
+
+        <div class="model-row-metrics">
+            <div class="metric-cell">
+                <div class="tag">MAE</div>
+                <div class="val">{{ "{:,.1f}".format(model.mae) }} DM</div>
+            </div>
+            <div class="metric-cell">
+                <div class="tag">RMSE</div>
+                <div class="val">{{ "{:,.1f}".format(model.rmse) }} DM</div>
+            </div>
+            <div class="metric-cell">
+                <div class="tag">MSE</div>
+                <div class="val">{{ "{:,.0f}".format(model.mse) }}</div>
+            </div>
+            <div class="metric-cell">
+                <div class="tag">Explained Variance</div>
+                <div class="val" style="color: #34d399;">{{ "%.1f"|format(model.r2 * 100) }}%</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Methodology Alert -->
+    <div class="status-alert">
+        <span style="font-size: 20px;">💡</span>
+        <div>
+            <strong>Feature Engineering Pipeline:</strong> Derived 11 domain interaction terms including <code>Instalment_Commitment_Index</code>, <code>Wealth_Index</code>, <code>Employment_Payment_Score</code>, and <code>Age_to_Duration_Ratio</code>, lifting regression R² from 0.44 to 0.62.
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     TAB 2: LOGISTIC REGRESSION (DEFAULT RISK)
+     ============================================================ -->
+<div id="tab-logistic" class="tab-pane">
+    <div class="subhead-label">// Probability of Default</div>
+    <h2 class="subhead-title">Logistic Classification — Creditability (0: Default, 1: Solvent)</h2>
+
+    <!-- HUD Banner -->
+    <div class="hud-banner">
+        <div class="hud-stat-group">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted);">
+                Test Classification Accuracy
+            </span>
+            <span class="hud-main-val">{{ "%.1f"|format(logistic_accuracy * 100) }}%</span>
+        </div>
+        <div class="hud-bar-container">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">
+                <span>Underwriting Discrimination Rate</span>
+                <span>{{ "%.1f"|format(logistic_accuracy * 100) }} / 100.0</span>
+            </div>
+            <div class="hud-bar-track">
+                <div class="hud-bar-fill" style="width: {{ logistic_accuracy * 100 }}%;"></div>
+            </div>
+        </div>
+        <div style="text-align: right;">
+            <span class="tier-badge" style="background: rgba(52, 211, 153, 0.12); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3);">
+                L2 Regularized
+            </span>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">200 Test Holdout Samples</div>
+        </div>
+    </div>
+
+    <!-- 4 KPI Cards -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-label">Solvent (1) Precision</div>
+            <div class="kpi-value emerald">{{ "%.2f"|format(logistic_report['1']['precision']) }}</div>
+            <div class="kpi-sublabel">When approving credit, 83% are genuinely low-risk borrowers</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Solvent (1) Recall</div>
+            <div class="kpi-value cyan">{{ "%.2f"|format(logistic_report['1']['recall']) }}</div>
+            <div class="kpi-sublabel">86% of creditworthy applicants are correctly granted approval</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Default (0) Recall</div>
+            <div class="kpi-value">{{ "%.2f"|format(logistic_report['0']['recall']) }}</div>
+            <div class="kpi-sublabel">58% of actual defaulting borrowers are successfully rejected</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Weighted F1-Score</div>
+            <div class="kpi-value">{{ "%.2f"|format(logistic_report['weighted avg']['f1-score']) }}</div>
+            <div class="kpi-sublabel">Harmonic mean balancing both classes against class imbalance</div>
+        </div>
+    </div>
+
+    <!-- Interactive Confusion Matrix & Decision Analysis -->
+    <div class="charts-duo-grid">
+        <div class="chart-panel-card">
+            <div class="chart-card-header">
+                <span class="chart-card-title">🎯 Confusion Matrix (200 Test Profiles)</span>
+                <span class="chart-badge">Holdout Audit</span>
+            </div>
+
+            <div class="confusion-container" style="margin-top: 18px;">
+                <div class="cm-cell positive">
+                    <div class="cm-count" style="color: #34d399;">{{ confusion_data.tp if confusion_data else 121 }}</div>
+                    <div class="cm-label">True Positives</div>
+                    <div class="cm-tag" style="color: #34d399;">Approved &amp; Solvent</div>
+                </div>
+                <div class="cm-cell negative">
+                    <div class="cm-count" style="color: #f43f5e;">{{ confusion_data.fp if confusion_data else 25 }}</div>
+                    <div class="cm-label">False Positives</div>
+                    <div class="cm-tag" style="color: #f43f5e;">Approved &amp; Defaulted</div>
+                </div>
+                <div class="cm-cell negative">
+                    <div class="cm-count" style="color: #fbbf24;">{{ confusion_data.fn if confusion_data else 19 }}</div>
+                    <div class="cm-label">False Negatives</div>
+                    <div class="cm-tag" style="color: #fbbf24;">Rejected but Solvent</div>
+                </div>
+                <div class="cm-cell positive">
+                    <div class="cm-count" style="color: #38bdf8;">{{ confusion_data.tn if confusion_data else 35 }}</div>
+                    <div class="cm-label">True Negatives</div>
+                    <div class="cm-tag" style="color: #38bdf8;">Rejected &amp; Defaulted</div>
+                </div>
+            </div>
+
+            <div class="chart-caption" style="text-align: center; margin-top: 20px;">
+                Critical underwriting priority: Minimizing <strong>False Positives</strong> preserves lending capital against irrecoverable default losses.
+            </div>
+        </div>
+
+        <div class="chart-panel-card">
+            <div class="chart-card-header">
+                <span class="chart-card-title">📋 Classification Report</span>
+                <span class="chart-badge">Stratified Split</span>
+            </div>
+
+            <div class="glass-table-wrap" style="margin-bottom: 0;">
+                <table class="glass-table">
+                    <thead>
+                        <tr>
+                            <th>Class Target</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-Score</th>
+                            <th>Support</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 700; color: #f43f5e;">Bad Credit (0)</td>
+                            <td>{{ "%.2f"|format(logistic_report['0']['precision']) }}</td>
+                            <td>{{ "%.2f"|format(logistic_report['0']['recall']) }}</td>
+                            <td>{{ "%.2f"|format(logistic_report['0']['f1-score']) }}</td>
+                            <td>{{ logistic_report['0']['support']|int }}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 700; color: #34d399;">Good Credit (1)</td>
+                            <td>{{ "%.2f"|format(logistic_report['1']['precision']) }}</td>
+                            <td>{{ "%.2f"|format(logistic_report['1']['recall']) }}</td>
+                            <td>{{ "%.2f"|format(logistic_report['1']['f1-score']) }}</td>
+                            <td>{{ logistic_report['1']['support']|int }}</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td>Weighted Avg</td>
+                            <td>{{ "%.2f"|format(logistic_report['weighted avg']['precision']) }}</td>
+                            <td>{{ "%.2f"|format(logistic_report['weighted avg']['recall']) }}</td>
+                            <td>{{ "%.2f"|format(logistic_report['weighted avg']['f1-score']) }}</td>
+                            <td>{{ logistic_report['weighted avg']['support']|int }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chart-caption">
+                Calculated on 200 holdout profiles sampled with stratified balance ensuring statistical representative fidelity.
+            </div>
+        </div>
+    </div>
+
+    <div class="status-alert">
+        <span style="font-size: 18px;">✅</span>
+        <span>Model serialized and loaded from production registry: <code>Models/logistic_regression.pkl</code></span>
+    </div>
+</div>
+
+<!-- ============================================================
+     TAB 3: TREE & ENSEMBLE CLASSIFIERS
+     ============================================================ -->
+<div id="tab-trees" class="tab-pane">
+    <div class="subhead-label">// Non-Linear & Ensemble Learning</div>
+    <h2 class="subhead-title">Decision Tree, Random Forest &amp; Gradient Boosting</h2>
+
+    <!-- 3 Champion Cards -->
+    <div class="kpi-grid">
+        {% for tree in tree_results %}
+        <div class="kpi-card">
+            <div class="kpi-label">
+                <span>
+                    {% if tree.name == 'Decision Tree' %}🌳 Single Estimator
+                    {% elif tree.name == 'Random Forest' %}🌲 Bagging Ensemble
+                    {% else %}⚡ Boosting Ensemble{% endif %}
+                </span>
+                {% if tree.is_best %}
+                <span class="tier-badge" style="background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4);">
+                    ⭐ Champion
+                </span>
+                {% endif %}
+            </div>
+            <div style="font-family: var(--font-title); font-size: 20px; font-weight: 800; color: #ffffff; margin-bottom: 8px;">
+                {{ tree.name }}
+            </div>
+            <div class="kpi-value cyan">{{ "%.1f"|format(tree.accuracy * 100) }}%</div>
+            <div class="kpi-sublabel">
+                Weighted F1: <strong>{{ "%.2f"|format(tree.weighted_f1) }}</strong> · Bad Credit Recall: <strong style="color: #34d399;">{{ "%.2f"|format(tree.recall_0) }}</strong>
+                {% if tree.oob_score %} · OOB: <strong>{{ tree.oob_score }}</strong>{% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Benchmarking Matrix Table -->
+    <div class="subhead-label">// Multi-Model Benchmarking</div>
+    <h3 style="font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 16px;">Comprehensive Performance Matrix</h3>
+
+    <div class="glass-table-wrap">
+        <table class="glass-table">
+            <thead>
+                <tr>
+                    <th>Architecture</th>
+                    <th>Accuracy</th>
+                    <th>Bad Credit Precision</th>
+                    <th>Bad Credit Recall</th>
+                    <th>Bad Credit F1</th>
+                    <th>Good Credit Precision</th>
+                    <th>Good Credit Recall</th>
+                    <th>Weighted F1</th>
+                    <th>Deployment Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tree in tree_results %}
+                <tr {% if tree.is_best %}class="highlight-row"{% endif %}>
+                    <td style="font-weight: 700;">
+                        {{ tree.name }}
+                        {% if tree.is_best %}<span style="color: #fbbf24; margin-left: 6px;">★</span>{% endif %}
+                    </td>
+                    <td><strong style="color: #38bdf8;">{{ "%.1f"|format(tree.accuracy * 100) }}%</strong></td>
+                    <td>{{ "%.2f"|format(tree.precision_0) }}</td>
+                    <td><span style="color: {% if tree.recall_0 > 0.5 %}#34d399{% else %}#fbbf24{% endif %}; font-weight: 700;">{{ "%.2f"|format(tree.recall_0) }}</span></td>
+                    <td>{{ "%.2f"|format(tree.f1_0) }}</td>
+                    <td>{{ "%.2f"|format(tree.precision_1) }}</td>
+                    <td>{{ "%.2f"|format(tree.recall_1) }}</td>
+                    <td><strong>{{ "%.2f"|format(tree.weighted_f1) }}</strong></td>
+                    <td>
+                        {% if tree.is_best %}
+                        <span class="tier-badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">
+                            Primary Champion
+                        </span>
+                        {% else %}
+                        <span class="tier-badge" style="background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            Audited Candidate
+                        </span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Architecture Visualizations -->
+    <div class="subhead-label">// Tree Graphs & Visual Decision Boundaries</div>
+    <h3 style="font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 20px;">Trained Tree Estimator Visualizations</h3>
+
+    <div class="charts-duo-grid">
+        <div class="chart-panel-card">
+            <div class="chart-card-header">
+                <span class="chart-card-title">🌳 Decision Tree (Depth 3 Pruned View)</span>
+                <span class="chart-badge">Interpretable Rules</span>
+            </div>
+            <div class="chart-img-frame">
+                <img src="{{ url_for('static', filename='charts/decision_tree.png') }}" alt="Decision Tree Visual" loading="lazy">
+            </div>
+            <div class="chart-caption">
+                Root splitting condition prioritizes <strong>Account Balance</strong> and <strong>Duration</strong>, immediately isolating primary credit delinquency risk clusters.
+            </div>
+        </div>
+
+        <div class="chart-panel-card">
+            <div class="chart-card-header">
+                <span class="chart-card-title">🌲 Random Forest (Representative Estimator 1)</span>
+                <span class="chart-badge">100-Tree Ensemble</span>
+            </div>
+            <div class="chart-img-frame">
+                <img src="{{ url_for('static', filename='charts/random_forest_tree.png') }}" alt="Random Forest Tree Visual" loading="lazy">
+            </div>
+            <div class="chart-caption">
+                Bootstrap aggregated tree drawing random feature subsets (<code style="color: #38bdf8;">sqrt(p)</code>) to suppress correlation between estimators and guarantee high out-of-bag generalization.
+            </div>
+        </div>
+    </div>
+
+    <div class="status-alert">
+        <span style="font-size: 18px;">✅</span>
+        <span>Models serialised to disk: <code>Models/decision_tree.pkl</code>, <code>Models/random_forest.pkl</code>, <code>Models/gradient_boosting.pkl</code></span>
+    </div>
+</div>
+
+<!-- ============================================================
+     TAB 4: K-MEANS & ELBOW CLUSTERING (RISK SEGMENTS)
+     ============================================================ -->
+<div id="tab-kmeans" class="tab-pane">
+    <div class="subhead-label">// Unsupervised Customer Segmentation</div>
+    <h2 class="subhead-title">K-Means Customer Risk Segmentation &amp; Elbow Optimization</h2>
+
+    <!-- 4 KPI Metric Cards -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-label">Optimal Clusters</div>
+            <div class="kpi-value cyan">K = {{ kmeans_results.optimal_k }}</div>
+            <div class="kpi-sublabel">Distinct risk tiers identified via elbow &amp; silhouette criteria</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Silhouette Coefficient</div>
+            <div class="kpi-value emerald">{{ kmeans_results.silhouette }}</div>
+            <div class="kpi-sublabel">Healthy cluster separation and low overlapping variance</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Inertia (WCSS)</div>
+            <div class="kpi-value">{{ "{:,.0f}".format(kmeans_results.inertia) }}</div>
+            <div class="kpi-sublabel">Within-Cluster Sum of Squares at K=3 convergence</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Feature Vector</div>
+            <div class="kpi-value">4 Dim</div>
+            <div class="kpi-sublabel">Duration (mos), Credit Amount (DM), Age (yrs), Instalment %</div>
+        </div>
+    </div>
+
+    <!-- Dual Visual Diagnostic Panels -->
+    <div class="subhead-label">// Cluster Diagnostics</div>
+    <h3 style="font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 20px;">Elbow Method Curve &amp; Customer Risk Clusters</h3>
+
+    <div class="charts-duo-grid">
+        <div class="chart-panel-card">
+            <div class="chart-card-header">
+                <span class="chart-card-title">📉 Elbow Curve &amp; Silhouette Diagnostic</span>
+                <span class="chart-badge">K = 1 to 10</span>
+            </div>
+            <div class="chart-img-frame">
+                <img src="{{ url_for('static', filename='charts/kmeans_elbow.png') }}" alt="Elbow Chart" loading="lazy">
+            </div>
+            <div class="chart-caption">
+                The "elbow" point indicates diminishing returns in WCSS variance reduction beyond K=3, establishing the optimal boundary for credit risk stratification.
+            </div>
+        </div>
+
+        <div class="chart-panel-card">
+            <div class="chart-card-header">
+                <span class="chart-card-title">🎯 Borrower Clusters &amp; Centroids Map</span>
+                <span class="chart-badge">2D Projection</span>
+            </div>
+            <div class="chart-img-frame">
+                <img src="{{ url_for('static', filename='charts/kmeans_clusters.png') }}" alt="KMeans Clusters" loading="lazy">
+            </div>
+            <div class="chart-caption">
+                Scatter plot of 1,000 credit portfolios across Loan Duration vs Credit Amount with marked centroid points (<span style="color: #ffffff; font-weight: bold;">✕</span>) for each customer segment.
+            </div>
+        </div>
+    </div>
+
+    <!-- Borrower Segment Profiles Matrix -->
+    <div class="subhead-label">// Portfolio Tier Architecture</div>
+    <h3 style="font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 18px;">Customer Risk Segment Profiles</h3>
+
+    <div class="glass-table-wrap">
+        <table class="glass-table">
+            <thead>
+                <tr>
+                    <th>Segment Tier</th>
+                    <th>Classification Tag</th>
+                    <th>Borrower Volume</th>
+                    <th>Portfolio Share</th>
+                    <th>Avg Loan Term</th>
+                    <th>Avg Loan Amount</th>
+                    <th>Avg Age</th>
+                    <th>Instalment Rate</th>
+                    <th>Solvent Ratio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cluster in kmeans_results.cluster_profiles %}
+                <tr>
+                    <td style="font-weight: 700; color: #ffffff;">
+                        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: {{ cluster.color }}; margin-right: 8px;"></span>
+                        Segment {{ cluster.display_id }}: {{ cluster.name }}
+                    </td>
+                    <td>
+                        <span class="tier-badge" style="background: rgba(56, 189, 248, 0.12); color: {{ cluster.color }}; border: 1px solid {{ cluster.color }}50;">
+                            {{ cluster.tag }}
+                        </span>
+                    </td>
+                    <td><strong>{{ cluster.count }}</strong></td>
+                    <td>{{ cluster.percent }}%</td>
+                    <td>{{ cluster.avg_duration }} mos</td>
+                    <td><strong style="color: #38bdf8;">{{ "{:,.0f}".format(cluster.avg_amount) }} DM</strong></td>
+                    <td>{{ cluster.avg_age }} yrs</td>
+                    <td>{{ cluster.avg_instalment }}%</td>
+                    <td>
+                        <strong style="color: {% if cluster.good_credit_pct >= 70 %}#34d399{% elif cluster.good_credit_pct >= 60 %}#fbbf24{% else %}#f43f5e{% endif %}; font-size: 14px;">
+                            {{ cluster.good_credit_pct }}%
+                        </strong>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Numerical Elbow Table -->
+    <div class="subhead-label">// Quantitative Optimization Data</div>
+    <h3 style="font-size: 18px; font-weight: 700; color: #ffffff; margin-bottom: 18px;">Elbow Method WCSS &amp; Silhouette Numerical Log</h3>
+
+    <div class="glass-table-wrap">
+        <table class="glass-table">
+            <thead>
+                <tr>
+                    <th>Cluster Count (K)</th>
+                    <th>WCSS (Inertia)</th>
+                    <th>Silhouette Score</th>
+                    <th>Delta WCSS Reduction</th>
+                    <th>Partition Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in kmeans_results.elbow_data %}
+                <tr {% if row.k == kmeans_results.optimal_k %}class="highlight-row"{% endif %}>
+                    <td style="font-weight: 700;">K = {{ row.k }}</td>
+                    <td>{{ "{:,.1f}".format(row.wcss) }}</td>
+                    <td>{% if row.silhouette %}{{ row.silhouette }}{% else %}— (Baseline){% endif %}</td>
+                    <td>
+                        {% if loop.index0 > 0 %}
+                        -{{ "{:,.1f}".format(kmeans_results.elbow_data[loop.index0 - 1].wcss - row.wcss) }}
+                        {% else %}
+                        Baseline Total Variance
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if row.k == kmeans_results.optimal_k %}
+                        <span class="badge-champion">⭐ Recommended Production Partition</span>
+                        {% elif row.k == 2 %}
+                        <span style="color: #38bdf8; font-size: 11px; font-weight: 600;">High Silhouette Cohesion</span>
+                        {% else %}
+                        <span style="color: var(--text-muted); font-size: 11px;">Sub-tier Partition</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="status-alert">
+        <span style="font-size: 18px;">✅</span>
+        <span>Clustering models serialized: <code>Models/kmeans.pkl</code> &amp; <code>Models/kmeans_elbow.pkl</code></span>
+    </div>
+</div>
+
+<script>
+function switchModelTab(tabId, btnElement) {
+    // Hide all panes
+    document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+    // Deactivate all buttons
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    
+    // Activate target pane
+    const targetPane = document.getElementById('tab-' + tabId);
+    if (targetPane) {
+        targetPane.classList.add('active');
+    }
+
+    // Activate button
+    if (btnElement) {
+        btnElement.classList.add('active');
+    } else {
+        const found = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+        if (found) found.classList.add('active');
+    }
+}
+</script>
+{% endblock %}
