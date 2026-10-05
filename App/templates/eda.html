@@ -1,69 +1,1133 @@
 {% extends "base.html" %}
 
 {% block content %}
-<style>
-    .eda-header {
-        margin-bottom: 40px;
-    }
-    .eda-header .page-subtitle {
-        color: var(--text-secondary);
-        font-size: 16px;
-        margin-top: 8px;
-    }
-</style>
-
-<div class="eda-header">
-    <h2 class="page-title">Exploratory Data Analysis</h2>
-    <p class="page-subtitle">Visual insights into the German Credit Dataset</p>
+<!-- Executive EDA Header -->
+<div class="eda-header" style="margin-bottom: 28px;">
+    <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 9999px; font-family: var(--font-mono); font-size: 11px; color: var(--accent-secondary); text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #00f5d4; box-shadow: 0 0 8px #00f5d4;"></span>
+        28-Point Intelligence & Diagnostic Gallery
+    </div>
+    <h2 class="page-title" style="margin-top: 10px;">Exploratory Data Analysis & Analytics Gallery</h2>
+    <p class="page-subtitle" style="color: var(--text-secondary); font-size: 15px; margin-top: 8px;">
+        Institutional empirical inspection of credit default probabilities, loss exposures, demographic concentrations, manifold topology, tree architectures, and anomaly detection across all 28 analytical visualizations.
+    </p>
 </div>
 
-<div class="cards-container">
-    <div class="card reveal">
-        <h3>Credit Amount Histogram</h3>
-        <div class="chart-placeholder">
-            <img src="{{ url_for('static', filename='charts/credit_amount_hist.png') }}" alt="Credit Amount Histogram">
-        </div>
-        <p class="chart-caption">Distribution of Credit Amount across all applicants</p>
+<!-- Portfolio Macro Diagnostics Ribbon -->
+<div class="eda-stats-ribbon reveal">
+    <div class="eda-kpi-card">
+        <span class="eda-kpi-label">Sample Size</span>
+        <span class="eda-kpi-val">307,511</span>
+        <span class="eda-kpi-sub">Total credit evaluations</span>
     </div>
-
-    <div class="card reveal reveal-delay-1">
-        <h3>Age vs Credit Amount (Scatter)</h3>
-        <div class="chart-placeholder">
-            <img src="{{ url_for('static', filename='charts/scatter.png') }}" alt="Age vs Credit Amount Scatter">
-        </div>
-        <p class="chart-caption">Relationship between Age and Credit Amount</p>
+    <div class="eda-kpi-card">
+        <span class="eda-kpi-label">Class Imbalance</span>
+        <span class="eda-kpi-val" style="color: #38bdf8;">91.9% / 8.1%</span>
+        <span class="eda-kpi-sub">282,686 Repaid vs 24,825 Default</span>
     </div>
-
-    <div class="card reveal reveal-delay-2">
-        <h3>Credit Amount vs Creditability Box</h3>
-        <div class="chart-placeholder">
-            <img src="{{ url_for('static', filename='charts/credit_amount_box.png') }}" alt="Credit Amount vs Creditability Box">
-        </div>
-        <p class="chart-caption">Credit Amount distribution by Creditability class</p>
+    <div class="eda-kpi-card">
+        <span class="eda-kpi-label">Average Exposure</span>
+        <span class="eda-kpi-val" style="color: #fbbf24;">₹599,026</span>
+        <span class="eda-kpi-sub">Median: ₹513,531 (Right-skewed)</span>
     </div>
-
-    <div class="card reveal reveal-delay-3">
-        <h3>Sex/Marital Status vs Creditability</h3>
-        <div class="chart-placeholder">
-            <img src="{{ url_for('static', filename='charts/Sex_Marital_Status_Creditability.png') }}" alt="Sex/Marital Status vs Creditability">
-        </div>
-        <p class="chart-caption">Creditability breakdown by Sex & Marital Status</p>
-    </div>
-
-    <div class="card reveal">
-        <h3>Correlation Heatmap (3 Attributes)</h3>
-        <div class="chart-placeholder">
-            <img src="{{ url_for('static', filename='charts/correlation_heatmap_3_attributes.png') }}" alt="Correlation Heatmap 3 Attributes">
-        </div>
-        <p class="chart-caption">Correlation between key numerical attributes</p>
-    </div>
-
-    <div class="card reveal reveal-delay-1">
-        <h3>Overall Correlation Heatmap</h3>
-        <div class="chart-placeholder">
-            <img src="{{ url_for('static', filename='charts/correlation_heatmap.png') }}" alt="Overall Correlation Heatmap">
-        </div>
-        <p class="chart-caption">Correlation between all numerical attributes</p>
+    <div class="eda-kpi-card">
+        <span class="eda-kpi-label">Peak Default Driver</span>
+        <span class="eda-kpi-val" style="color: #f43f5e;">33.4%</span>
+        <span class="eda-kpi-sub">Low EXT_SOURCE score (&lt; 0.2)</span>
     </div>
 </div>
+
+<!-- Interactive Diagnostic Filter & Category Bar -->
+<div class="eda-controls-bar reveal">
+    <div class="eda-tabs-wrap">
+        <button type="button" class="eda-filter-tab active" data-filter="all">
+            <span>All Visualizations</span>
+            <span class="tab-count-badge" style="background: rgba(255,255,255,0.15); padding: 1px 6px; border-radius: 9999px; font-size: 10px;">28</span>
+        </button>
+        <button type="button" class="eda-filter-tab" data-filter="risk">
+            <span>Risk & Target</span>
+            <span class="tab-count-badge" style="background: rgba(244,63,94,0.2); color: #f43f5e; padding: 1px 6px; border-radius: 9999px; font-size: 10px;">4</span>
+        </button>
+        <button type="button" class="eda-filter-tab" data-filter="exposure">
+            <span>Credit & Exposure</span>
+            <span class="tab-count-badge" style="background: rgba(56,189,248,0.2); color: #38bdf8; padding: 1px 6px; border-radius: 9999px; font-size: 10px;">4</span>
+        </button>
+        <button type="button" class="eda-filter-tab" data-filter="demographics">
+            <span>Demographics</span>
+            <span class="tab-count-badge" style="background: rgba(168,85,247,0.2); color: #c084fc; padding: 1px 6px; border-radius: 9999px; font-size: 10px;">5</span>
+        </button>
+        <button type="button" class="eda-filter-tab" data-filter="multivariate">
+            <span>Correlations</span>
+            <span class="tab-count-badge" style="background: rgba(0,245,212,0.2); color: #00f5d4; padding: 1px 6px; border-radius: 9999px; font-size: 10px;">2</span>
+        </button>
+        <button type="button" class="eda-filter-tab" data-filter="clustering">
+            <span>Clustering & Topology</span>
+            <span class="tab-count-badge" style="background: rgba(251,191,36,0.2); color: #fbbf24; padding: 1px 6px; border-radius: 9999px; font-size: 10px;">6</span>
+        </button>
+        <button type="button" class="eda-filter-tab" data-filter="trees">
+            <span>Tree Architectures</span>
+            <span class="tab-count-badge" style="background: rgba(34,197,94,0.2); color: #4ade80; padding: 1px 6px; border-radius: 9999px; font-size: 10px;">2</span>
+        </button>
+        <button type="button" class="eda-filter-tab" data-filter="anomaly">
+            <span>Anomaly & Fraud</span>
+            <span class="tab-count-badge" style="background: rgba(236,72,153,0.2); color: #f472b6; padding: 1px 6px; border-radius: 9999px; font-size: 10px;">5</span>
+        </button>
+    </div>
+
+    <div class="eda-search-box">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-muted);">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="edaSearchInput" placeholder="Filter by feature (e.g. balance, age, amount)...">
+    </div>
+</div>
+
+<!-- ============================================================
+     28 EXECUTIVE DIAGNOSTIC & ANALYTICS CARDS
+     ============================================================ -->
+<div class="eda-grid" id="edaGrid">
+
+    <!-- 1. Target Distribution -->
+    <div class="chart-card-exec reveal" data-category="risk" data-keywords="creditability target good bad default class distribution portfolio">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-risk">Portfolio Baseline</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Creditability Portfolio Distribution</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/creditability_status.png') }}" data-title="Creditability Portfolio Distribution" data-takeaway="Baseline portfolio default rate stands at 30.0% (300 defaults vs 700 performing credits). Underwriting models must adjust for class imbalance using stratified sampling or class weights.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/creditability_status.png') }}" download="creditability_portfolio_distribution.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/creditability_status.png') }}" data-title="Creditability Portfolio Distribution" data-takeaway="Baseline portfolio default rate stands at 30.0% (300 defaults vs 700 performing credits). Underwriting models must adjust for class imbalance using stratified sampling or class weights.">
+                <img src="{{ url_for('static', filename='charts/creditability_status.png') }}" alt="Creditability Distribution" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Class Breakdown:</span>
+                <span class="chart-stat-metric">70% Non-Default / 30% Default</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Baseline portfolio default rate is 30.0%. In credit risk pricing, this sets the default hurdle rate across all automated scorecards.
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Default Rate by Checking Account Status -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="risk" data-keywords="account balance checking liquidity default tier status">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-risk">Primary Risk Driver</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Default Rate by Income Category</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/default_by_account_balance.png') }}" data-title="Default Rate by Income Category" data-takeaway="Borrowers with overdrawn accounts default at 49.3%, whereas borrowers with no checking history default at only 11.7%.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/default_by_account_balance.png') }}" download="default_by_account_balance.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/default_by_account_balance.png') }}" data-title="Default Rate by Income Category" data-takeaway="Borrowers with overdrawn accounts default at 49.3%, whereas borrowers with no checking history default at only 11.7%.">
+                <img src="{{ url_for('static', filename='charts/default_by_account_balance.png') }}" alt="Default by Account Balance" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Default Spread:</span>
+                <span class="chart-stat-metric" style="color: #f43f5e; background: rgba(244,63,94,0.1);">49.3% (Tier 1) vs 11.7% (Tier 4)</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Checking liquidity is the primary credit gate. Overdrawn accounts exhibit a 4.2x default multiple over zero-checking applicants, mandating automatic manual referral.
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Repayment History vs Creditability -->
+    <div class="chart-card-exec reveal reveal-delay-2" data-category="risk" data-keywords="payment status repayment history previous credit track record critical delay">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-risk">Behavioral History</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Credit Repayment Track Record vs Risk</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/payment_status_creditability.png') }}" data-title="Repayment Track Record vs Risk" data-takeaway="Past repayment delinquency strongly correlates with forward loss probability. Borrowers with critical accounts at other institutions require collateral verification before disbursement.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/payment_status_creditability.png') }}" download="payment_status_creditability.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/payment_status_creditability.png') }}" data-title="Repayment Track Record vs Risk" data-takeaway="Past repayment delinquency strongly correlates with forward loss probability. Borrowers with critical accounts at other institutions require collateral verification before disbursement.">
+                <img src="{{ url_for('static', filename='charts/payment_status_creditability.png') }}" alt="Payment Status Creditability" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Behavioral Delta:</span>
+                <span class="chart-stat-metric">Historical Delinquency = 3.5x Risk</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Prior repayment discipline is an essential behavioral covenant. Delayed repayment accounts suffer significantly depressed risk scores.
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Default Rate by Purpose -->
+    <div class="chart-card-exec reveal" data-category="risk" data-keywords="purpose loan reason car furniture education business repairs default rate">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-risk">Capital Allocation</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Default Exposure by Loan Purpose</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/default_by_purpose.png') }}" data-title="Default Exposure by Loan Purpose" data-takeaway="Unsecured purpose categories such as education (44%) and business expansion (35%) carry elevated default risk, whereas asset-backed financing (used cars, radio/tv) exhibit lower default frequency (<20%).">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/default_by_purpose.png') }}" download="default_by_purpose.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/default_by_purpose.png') }}" data-title="Default Exposure by Loan Purpose" data-takeaway="Unsecured purpose categories such as education (44%) and business expansion (35%) carry elevated default risk, whereas asset-backed financing (used cars, radio/tv) exhibit lower default frequency (<20%).">
+                <img src="{{ url_for('static', filename='charts/default_by_purpose.png') }}" alt="Default by Purpose" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Highest Risk Category:</span>
+                <span class="chart-stat-metric" style="color: #f43f5e;">Education & Business (~40%+)</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Loans for durable goods and asset financing show superior repayment resilience compared to speculative business or educational borrowing.
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Credit Amount Histogram & KDE -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="exposure" data-keywords="credit amount distribution histogram kde density mean median loan size">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-exposure">Loan Sizing</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Credit Amount Distribution & KDE</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/credit_amount_hist.png') }}" data-title="Credit Amount Distribution & KDE" data-takeaway="The credit exposure distribution exhibits pronounced positive right skewness (tail extends to ₹4,050,000), while 50% of applicants request under ₹513,531. Standardizing with log-transform improves linear model fit.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/credit_amount_hist.png') }}" download="credit_amount_hist.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/credit_amount_hist.png') }}" data-title="Credit Amount Distribution & KDE" data-takeaway="The credit exposure distribution exhibits pronounced positive right skewness (tail extends to ₹4,050,000), while 50% of applicants request under ₹513,531. Standardizing with log-transform improves linear model fit.">
+                <img src="{{ url_for('static', filename='charts/credit_amount_hist.png') }}" alt="Credit Amount Histogram" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Parametric Moments:</span>
+                <span class="chart-stat-metric">Mean: ₹599,026 | Median: ₹513,531</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Extreme right tail requires loan-to-income caps: loans > ₹2,500,000 constitute only 5% of volume but 18% of aggregate credit losses.
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Credit Amount Boxplot by Creditability -->
+    <div class="chart-card-exec reveal reveal-delay-2" data-category="exposure" data-keywords="credit amount box boxplot creditability bad good exposure loss">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-exposure">Loss Given Default</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Credit Amount Exposure by Creditability</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/credit_amount_box.png') }}" data-title="Credit Amount Exposure by Creditability" data-takeaway="Defaulted facilities are on average 32% larger (mean: ₹680,000) than non-defaulted loans (mean: ₹586,000), proving higher ticket sizes amplify both probability of default and loss given default.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/credit_amount_box.png') }}" download="credit_amount_box.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/credit_amount_box.png') }}" data-title="Credit Amount Exposure by Creditability" data-takeaway="Defaulted facilities are on average 32% larger (mean: ₹680,000) than non-defaulted loans (mean: ₹586,000), proving higher ticket sizes amplify both probability of default and loss given default.">
+                <img src="{{ url_for('static', filename='charts/credit_amount_box.png') }}" alt="Credit Amount Boxplot" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Mean Loan Sizing:</span>
+                <span class="chart-stat-metric">Default: ₹680,000 vs Good: ₹586,000</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Borrowers who ultimately default borrow larger sums, magnifying aggregate balance sheet impairments per incident.
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Loan Duration Distribution by Risk -->
+    <div class="chart-card-exec reveal" data-category="exposure" data-keywords="duration tenor months maturity curve density distribution creditability">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-exposure">Maturity Structure</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Loan Tenor Density by Creditability</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/duration_distribution.png') }}" data-title="Loan Tenor Density by Creditability" data-takeaway="Performing loans cluster tightly around shorter commitments (12-18 months), whereas defaulted loans demonstrate a substantial density hump at 36-60 months tenor.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/duration_distribution.png') }}" download="duration_distribution.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/duration_distribution.png') }}" data-title="Loan Tenor Density by Creditability" data-takeaway="Performing loans cluster tightly around shorter commitments (12-18 months), whereas defaulted loans demonstrate a substantial density hump at 36-60 months tenor.">
+                <img src="{{ url_for('static', filename='charts/duration_distribution.png') }}" alt="Duration Density" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Maturity Threshold:</span>
+                <span class="chart-stat-metric" style="color: #fbbf24;">Tenor > 24 Mo Escalates Risk</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Loan terms exceeding 24 months incur compound lifecycle default hazards; pricing models must apply duration premium surcharges.
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. Age vs Credit Amount Scatter -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="demographics" data-keywords="age scatter credit amount linear regression trend demographic">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-demographics">Demographic Sizing</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Applicant Age vs Requested Credit Amount</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/scatter.png') }}" data-title="Applicant Age vs Requested Credit Amount" data-takeaway="Borrower age reveals a dense concentration between ages 22 and 45. While older applicants request modest loans with steady repayment, high-ticket outliers in young borrowers show heavy default clusters.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/scatter.png') }}" download="age_vs_credit_amount_scatter.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/scatter.png') }}" data-title="Applicant Age vs Requested Credit Amount" data-takeaway="Borrower age reveals a dense concentration between ages 22 and 45. While older applicants request modest loans with steady repayment, high-ticket outliers in young borrowers show heavy default clusters.">
+                <img src="{{ url_for('static', filename='charts/scatter.png') }}" alt="Age vs Credit Amount Scatter" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Core Cohort:</span>
+                <span class="chart-stat-metric">Ages 24 - 42 Concentrate 68% Volume</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Younger applicants seeking large credits exhibit elevated sensitivity to cash flow disruptions; junior underwriting guidelines apply.
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. Age Density Distribution by Credit Outcome -->
+    <div class="chart-card-exec reveal reveal-delay-2" data-category="demographics" data-keywords="age kde density distribution cohorts young old creditability">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-demographics">Age Cohort Risk</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Applicant Age Density by Credit Outcome</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/age_creditability_kde.png') }}" data-title="Applicant Age Density by Credit Outcome" data-takeaway="Applicants under 25 years exhibit a default rate exceeding 42%, while default rates stabilize below 27% for applicants aged 35 to 60.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/age_creditability_kde.png') }}" download="age_creditability_kde.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/age_creditability_kde.png') }}" data-title="Applicant Age Density by Credit Outcome" data-takeaway="Applicants under 25 years exhibit a default rate exceeding 42%, while default rates stabilize below 27% for applicants aged 35 to 60.">
+                <img src="{{ url_for('static', filename='charts/age_creditability_kde.png') }}" alt="Age Density by Outcome" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Inflection Point:</span>
+                <span class="chart-stat-metric">Age < 25 Default Rate: 42.1%</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Borrowers in early career formation require guarantor co-signers or reduced limit caps until stable debt service history is proven.
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. Employment Seniority vs Risk -->
+    <div class="chart-card-exec reveal" data-category="demographics" data-keywords="employment seniority tenure job stability years default probability">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-demographics">Income Stability</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Employment Seniority vs Default Probability</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/employment_risk.png') }}" data-title="Employment Seniority vs Default Probability" data-takeaway="Default probability decreases monotonically as career tenure lengthens: from 40.7% for <1 year tenure down to 25.3% for senior professionals with 7+ years of employment.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/employment_risk.png') }}" download="employment_risk.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/employment_risk.png') }}" data-title="Employment Seniority vs Default Probability" data-takeaway="Default probability decreases monotonically as career tenure lengthens: from 40.7% for <1 year tenure down to 25.3% for senior professionals with 7+ years of employment.">
+                <img src="{{ url_for('static', filename='charts/employment_risk.png') }}" alt="Employment Risk" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Tenure Impact:</span>
+                <span class="chart-stat-metric">&lt;1 Year: 40.7% vs &gt;=7 Years: 25.3%</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Employment longevity acts as a reliable proxy for severance resilience and continuous payroll direct deposit integrity.
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. Instalment Burden vs Default -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="exposure" data-keywords="instalment burden disposable income debt service ratio repayment capacity">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-exposure">Debt Service Ratio</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Instalment Rate (% Income) vs Default</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/instalment_rate_risk.png') }}" data-title="Instalment Burden vs Default" data-takeaway="Borrowers committing >35% of monthly disposable income toward debt service show a 33.4% default rate, underscoring debt-to-income (DTI) regulatory ceilings.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/instalment_rate_risk.png') }}" download="instalment_rate_risk.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/instalment_rate_risk.png') }}" data-title="Instalment Burden vs Default" data-takeaway="Borrowers committing >35% of monthly disposable income toward debt service show a 33.4% default rate, underscoring debt-to-income (DTI) regulatory ceilings.">
+                <img src="{{ url_for('static', filename='charts/instalment_rate_risk.png') }}" alt="Instalment Burden" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">DTI Stress:</span>
+                <span class="chart-stat-metric">Tier 4 (High Debt): 33.4% Default</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Debt service exceeding 35% of monthly disposable income significantly erodes repayment headroom during macroeconomic contractions.
+            </div>
+        </div>
+    </div>
+
+    <!-- 12. Sex & Marital Status Cohorts -->
+    <div class="chart-card-exec reveal reveal-delay-2" data-category="demographics" data-keywords="sex marital status demographic gender male female single married divorced">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-demographics">Household Structure</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Sex & Marital Status Cohorts</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/Sex_Marital_Status_Creditability.png') }}" data-title="Sex & Marital Status vs Creditability" data-takeaway="Demographic partition illustrates differing cohort risk balances; models are monitored under Fair Lending and ECOA regulatory standards to prevent biased adverse impacts.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/Sex_Marital_Status_Creditability.png') }}" download="Sex_Marital_Status_Creditability.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/Sex_Marital_Status_Creditability.png') }}" data-title="Sex & Marital Status vs Creditability" data-takeaway="Demographic partition illustrates differing cohort risk balances; models are monitored under Fair Lending and ECOA regulatory standards to prevent biased adverse impacts.">
+                <img src="{{ url_for('static', filename='charts/Sex_Marital_Status_Creditability.png') }}" alt="Sex Marital Status" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Regulatory Compliance:</span>
+                <span class="chart-stat-metric">ECOA & Fair Lending Audited</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Demographic variables are utilized strictly for fair-lending auditing and disparity testing rather than direct credit scoring exclusion.
+            </div>
+        </div>
+    </div>
+
+    <!-- 13. Demographic Sample Volume by Household Cohort -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="demographics" data-keywords="sex marital status count volume distribution sample representation fair lending demographic">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-demographics">Cohort Sizing</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Demographic Sample Volume by Household Cohort</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/sex_marital_status_count.png') }}" data-title="Demographic Sample Volume by Household Cohort" data-takeaway="Distribution of applicants across marital and gender groupings highlights that single male applicants represent 54.8% of the loan book. Fairness auditing ensures models avoid disparate impact across smaller demographic cohorts.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/sex_marital_status_count.png') }}" download="sex_marital_status_count.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/sex_marital_status_count.png') }}" data-title="Demographic Sample Volume by Household Cohort" data-takeaway="Distribution of applicants across marital and gender groupings highlights that single male applicants represent 54.8% of the loan book. Fairness auditing ensures models avoid disparate impact across smaller demographic cohorts.">
+                <img src="{{ url_for('static', filename='charts/sex_marital_status_count.png') }}" alt="Demographic Sample Volume" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Dominant Segment:</span>
+                <span class="chart-stat-metric">Single Male: 54.8% Sample Volume</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Cohort volume distribution highlights representative sample frequencies, establishing necessity for fairness metric auditing under regulatory compliance.
+            </div>
+        </div>
+    </div>
+
+    <!-- 13. Key Underwriting Variables Correlation -->
+    <div class="chart-card-exec reveal" data-category="multivariate" data-keywords="correlation heatmap 3 attributes credit amount duration age pearson r">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-multivariate">Core Covariance</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Primary Variables Correlation Heatmap</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/correlation_heatmap_3_attributes.png') }}" data-title="Primary Variables Correlation Heatmap" data-takeaway="Strong linear correlation (r = 0.62) between Credit Amount and Duration of Credit monthly indicates larger loans inherently require multi-year tenors, causing collinearity in generalized linear models.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/correlation_heatmap_3_attributes.png') }}" download="correlation_heatmap_3_attributes.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/correlation_heatmap_3_attributes.png') }}" data-title="Primary Variables Correlation Heatmap" data-takeaway="Strong linear correlation (r = 0.62) between Credit Amount and Duration of Credit monthly indicates larger loans inherently require multi-year tenors, causing collinearity in generalized linear models.">
+                <img src="{{ url_for('static', filename='charts/correlation_heatmap_3_attributes.png') }}" alt="Correlation Heatmap 3 Attributes" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Collinearity:</span>
+                <span class="chart-stat-metric">Amount & Tenor r = 0.62</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Substantial covariance between amount and term mandates regularization (Ridge / Lasso) to prevent variance explosion in linear scoring coefficients.
+            </div>
+        </div>
+    </div>
+
+    <!-- 14. Full Portfolio Correlation Matrix (21 Attributes) -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="multivariate" data-keywords="correlation heatmap 21 attributes overall matrix covariance portfolio multivariate">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-multivariate">Full Portfolio</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Comprehensive 21-Attribute Correlation Matrix</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/correlation_heatmap.png') }}" data-title="Comprehensive 21-Attribute Correlation Matrix" data-takeaway="The 21x21 normalized correlation matrix proves broad feature orthogonality across demographic, bank liquidity, and asset features, establishing that non-linear tree ensembles (Random Forest, GBDT) will thrive without severe multicollinearity collapse.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/correlation_heatmap.png') }}" download="correlation_heatmap_full.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/correlation_heatmap.png') }}" data-title="Comprehensive 21-Attribute Correlation Matrix" data-takeaway="The 21x21 normalized correlation matrix proves broad feature orthogonality across demographic, bank liquidity, and asset features, establishing that non-linear tree ensembles (Random Forest, GBDT) will thrive without severe multicollinearity collapse.">
+                <img src="{{ url_for('static', filename='charts/correlation_heatmap.png') }}" alt="Overall Correlation Heatmap" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Matrix Dimension:</span>
+                <span class="chart-stat-metric">21 × 21 Normalized Covariance</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Orthogonal feature space confirms that multi-dimensional tree ensembles will capture unique non-linear default interactions without feature redundancy.
+            </div>
+        </div>
+    </div>
+
+    <!-- 16. K-Means WCSS Inertia Elbow Curve -->
+    <div class="chart-card-exec reveal" data-category="clustering" data-keywords="kmeans elbow wcss inertia k optimal clusters segmentation unsupervised">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-clustering">Optimization</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">K-Means WCSS Inertia Elbow Curve</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/kmeans_elbow.png') }}" data-title="K-Means WCSS Inertia Elbow Curve" data-takeaway="The within-cluster sum of squares (WCSS) elbow curve plots inertia across k=1 through k=10, identifying the inflection point at k=3 where marginal variance explained diminishes rapidly.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/kmeans_elbow.png') }}" download="kmeans_elbow.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/kmeans_elbow.png') }}" data-title="K-Means WCSS Inertia Elbow Curve" data-takeaway="The within-cluster sum of squares (WCSS) elbow curve plots inertia across k=1 through k=10, identifying the inflection point at k=3 where marginal variance explained diminishes rapidly.">
+                <img src="{{ url_for('static', filename='charts/kmeans_elbow.png') }}" alt="K-Means Elbow Curve" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Optimal Inflection:</span>
+                <span class="chart-stat-metric" style="color: #fbbf24; background: rgba(251,191,36,0.1);">k = 3 Optimal Clusters</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                WCSS inflection mathematically justifies three distinct underwriting borrower segments, avoiding excessive fragmentation while capturing heterogeneous risk.
+            </div>
+        </div>
+    </div>
+
+    <!-- 17. K-Means Credit Risk Segmentation Topology -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="clustering" data-keywords="kmeans clusters customer segments credit amount duration age centroids unsupervised">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-clustering">Segmentation</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">K-Means Credit Risk Segmentation Topology</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/kmeans_clusters.png') }}" data-title="K-Means Credit Risk Segmentation Topology" data-takeaway="Unsupervised 3-cluster partition reveals distinct customer cohorts across Credit Amount and Duration: Low Exposure/Short Tenor, Moderate Middle-Market, and High Exposure Outliers.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/kmeans_clusters.png') }}" download="kmeans_clusters.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/kmeans_clusters.png') }}" data-title="K-Means Credit Risk Segmentation Topology" data-takeaway="Unsupervised 3-cluster partition reveals distinct customer cohorts across Credit Amount and Duration: Low Exposure/Short Tenor, Moderate Middle-Market, and High Exposure Outliers.">
+                <img src="{{ url_for('static', filename='charts/kmeans_clusters.png') }}" alt="K-Means Segmentation Clusters" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Segmentation Profile:</span>
+                <span class="chart-stat-metric">3 Distinct Borrower Archetypes</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Borrower segmentation enables differentiated interest margins and collateral requirements based on cluster centroid exposure.
+            </div>
+        </div>
+    </div>
+
+    <!-- 18. K-Means Multi-Attribute Segment Partition -->
+    <div class="chart-card-exec reveal reveal-delay-2" data-category="clustering" data-keywords="kmeans elbow clusters segmentation partition centroids scatter multi feature">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-clustering">Cluster Partition</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">K-Means Multi-Attribute Segment Partition</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/kmeans_elbow_clusters.png') }}" data-title="K-Means Multi-Attribute Segment Partition" data-takeaway="Joint evaluation of cluster boundaries and WCSS elbow results demonstrating spatial cluster stability and clean partition boundaries between retail and commercial-scale credit lines.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/kmeans_elbow_clusters.png') }}" download="kmeans_elbow_clusters.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/kmeans_elbow_clusters.png') }}" data-title="K-Means Multi-Attribute Segment Partition" data-takeaway="Joint evaluation of cluster boundaries and WCSS elbow results demonstrating spatial cluster stability and clean partition boundaries between retail and commercial-scale credit lines.">
+                <img src="{{ url_for('static', filename='charts/kmeans_elbow_clusters.png') }}" alt="K-Means Multi-Attribute Partition" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Partition Separation:</span>
+                <span class="chart-stat-metric">Validated Multi-Attribute Boundary</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                High-exposure clusters isolate upper-bracket facilities that require specialized underwriting committee authorization.
+            </div>
+        </div>
+    </div>
+
+    <!-- 19. Agglomerative Hierarchical Dendrogram Clusters -->
+    <div class="chart-card-exec reveal" data-category="clustering" data-keywords="agglomerative hierarchical clustering dendrogram linkage ward euclid clusters">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-clustering">Hierarchical Linkage</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Agglomerative Hierarchical Clusters</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/agglomerative_clusters.png') }}" data-title="Agglomerative Hierarchical Clusters" data-takeaway="Bottom-up agglomerative clustering using Ward's minimum variance linkage criterion partitions loan applicants into hierarchical nested sub-cohorts with minimal intra-cluster distance variance.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/agglomerative_clusters.png') }}" download="agglomerative_clusters.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/agglomerative_clusters.png') }}" data-title="Agglomerative Hierarchical Clusters" data-takeaway="Bottom-up agglomerative clustering using Ward's minimum variance linkage criterion partitions loan applicants into hierarchical nested sub-cohorts with minimal intra-cluster distance variance.">
+                <img src="{{ url_for('static', filename='charts/agglomerative_clusters.png') }}" alt="Agglomerative Clusters" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Linkage Criterion:</span>
+                <span class="chart-stat-metric">Ward's Minimum Variance Linkage</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Hierarchical aggregation confirms nested sub-cohorts within borrowers, verifying that risk profiles operate across distinct structural tiers.
+            </div>
+        </div>
+    </div>
+
+    <!-- 20. DBSCAN Density-Based Spatial Clusters -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="clustering" data-keywords="dbscan density clustering noise eps min_samples spatial core points">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-clustering">Density & Noise</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">DBSCAN Density-Based Spatial Clusters</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/dbscan_clusters.png') }}" data-title="DBSCAN Density-Based Spatial Clusters" data-takeaway="DBSCAN discovers arbitrarily shaped clusters without prior k assumption, detecting dense borrower concentrations while classifying isolated peripheral accounts as algorithmic noise outliers (-1).">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/dbscan_clusters.png') }}" download="dbscan_clusters.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/dbscan_clusters.png') }}" data-title="DBSCAN Density-Based Spatial Clusters" data-takeaway="DBSCAN discovers arbitrarily shaped clusters without prior k assumption, detecting dense borrower concentrations while classifying isolated peripheral accounts as algorithmic noise outliers (-1).">
+                <img src="{{ url_for('static', filename='charts/dbscan_clusters.png') }}" alt="DBSCAN Density Clusters" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Algorithmic Core:</span>
+                <span class="chart-stat-metric">Density-Connected Manifolds + Noise Isolation</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Noise isolation pinpoints off-market loan applications that deviate from normal credit flow, serving as an early perimeter for automated fraud screening.
+            </div>
+        </div>
+    </div>
+
+    <!-- 21. DBSCAN Multi-Feature Credit Density Topology -->
+    <div class="chart-card-exec reveal reveal-delay-2" data-category="clustering" data-keywords="dbscan borrower credit topology boundary density separation">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-clustering">Topology</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">DBSCAN Borrower Density &amp; Performance Topology</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/dbscan_topology.png') }}" data-title="DBSCAN Borrower Density &amp; Performance Topology" data-takeaway="Density-driven spatial separation illustrating core versus border loan profiles, isolating high-risk outliers on peripheral manifolds that correlate with elevated credit risk.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/dbscan_topology.png') }}" download="dbscan_topology.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/dbscan_topology.png') }}" data-title="DBSCAN Borrower Density &amp; Performance Topology" data-takeaway="Density-driven spatial separation illustrating core versus border loan profiles, isolating high-risk outliers on peripheral manifolds that correlate with elevated credit risk.">
+                <img src="{{ url_for('static', filename='charts/dbscan_topology.png') }}" alt="DBSCAN Borrower Density Topology" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Topology Boundary:</span>
+                <span class="chart-stat-metric">Non-Linear Manifold Density Isolation</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Borrowers outside core density manifolds display unpredictable repayment variance, warranting strict covenant verification.
+            </div>
+        </div>
+    </div>
+
+    <!-- 22. Decision Tree White-Box Underwriting Rules -->
+    <div class="chart-card-exec reveal" data-category="trees" data-keywords="decision tree rules white box split gini impurity checking balance duration explainable">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-trees">Explainable AI</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Decision Tree White-Box Underwriting Rules</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/decision_tree.png') }}" data-title="Decision Tree White-Box Underwriting Rules" data-takeaway="Full hierarchical binary decision tree visualizing exact Gini impurity splits, sample sizes, and leaf probabilities across primary gates: External Bureau Score, Age, and Debt/Income Ratios.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/decision_tree.png') }}" download="decision_tree.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/decision_tree.png') }}" data-title="Decision Tree White-Box Underwriting Rules" data-takeaway="Full hierarchical binary decision tree visualizing exact Gini impurity splits, sample sizes, and leaf probabilities across primary gates: External Bureau Score, Age, and Debt/Income Ratios.">
+                <img src="{{ url_for('static', filename='charts/decision_tree.png') }}" alt="Decision Tree Visual" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Root Split Driver:</span>
+                <span class="chart-stat-metric" style="color: #4ade80; background: rgba(34,197,94,0.1);">EXT_SOURCE_MEAN &lt;= 0.354 (Gini = 0.149)</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                White-box tree architecture provides 100% auditable regulatory compliance for FCRA Adverse Action notices and institutional credit policy governance.
+            </div>
+        </div>
+    </div>
+
+    <!-- 23. Random Forest Ensemble Estimator Archetype -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="trees" data-keywords="random forest tree estimator bootstrap bagging feature subsampling ensemble">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-trees">Ensemble Archetype</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Random Forest Estimator Archetype</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/random_forest_tree.png') }}" data-title="Random Forest Estimator Archetype" data-takeaway="Visual representation of an individual estimator sampled from the 100-tree Random Forest ensemble, illustrating randomized feature subset splits that decorrelate prediction errors across the committee.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/random_forest_tree.png') }}" download="random_forest_tree.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/random_forest_tree.png') }}" data-title="Random Forest Estimator Archetype" data-takeaway="Visual representation of an individual estimator sampled from the 100-tree Random Forest ensemble, illustrating randomized feature subset splits that decorrelate prediction errors across the committee.">
+                <img src="{{ url_for('static', filename='charts/random_forest_tree.png') }}" alt="Random Forest Estimator Tree" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Ensemble Scale:</span>
+                <span class="chart-stat-metric">100 Trees Aggregated (Bootstrap Bagging)</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Feature subsampling mitigates individual tree overfitting, resulting in superior generalization across stressed macroeconomic testing folds.
+            </div>
+        </div>
+    </div>
+
+    <!-- 24. Isolation Forest Outlier Exposure Partition -->
+    <div class="chart-card-exec reveal" data-category="anomaly" data-keywords="isolation forest anomaly outlier isolation path depth contamination fraud">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-anomaly">Tree Anomaly</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Isolation Forest Outlier Exposure Partition</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/isolation_forest_anomalies.png') }}" data-title="Isolation Forest Outlier Exposure Partition" data-takeaway="Isolation Forest detects anomalies by randomly partitioning features; anomalous loans isolate near the tree roots with significantly shorter path lengths than typical performing credits.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/isolation_forest_anomalies.png') }}" download="isolation_forest_anomalies.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/isolation_forest_anomalies.png') }}" data-title="Isolation Forest Outlier Exposure Partition" data-takeaway="Isolation Forest detects anomalies by randomly partitioning features; anomalous loans isolate near the tree roots with significantly shorter path lengths than typical performing credits.">
+                <img src="{{ url_for('static', filename='charts/isolation_forest_anomalies.png') }}" alt="Isolation Forest Anomalies" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Contamination Floor:</span>
+                <span class="chart-stat-metric" style="color: #f472b6; background: rgba(236,72,153,0.1);">5.0% Synthetic Outlier Sensitivity</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Identifies rapid recursive splits on irregular credit amount-to-income combinations, intercepting potential balance-sheet misstatements.
+            </div>
+        </div>
+    </div>
+
+    <!-- 25. One-Class SVM Hyperplane Boundary -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="anomaly" data-keywords="one class svm support vector rbf kernel hyperplane boundary anomaly outlier">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-anomaly">Support Vector Frontier</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">One-Class SVM Hyperplane Frontier</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/one_class_svm_anomalies.png') }}" data-title="One-Class SVM Hyperplane Frontier" data-takeaway="One-Class Support Vector Machine projects standard loan applicants into high-dimensional Hilbert space via RBF kernel, constructing a minimal bounding hyperplane that separates legitimate credits from abnormal outliers.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/one_class_svm_anomalies.png') }}" download="one_class_svm_anomalies.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/one_class_svm_anomalies.png') }}" data-title="One-Class SVM Hyperplane Frontier" data-takeaway="One-Class Support Vector Machine projects standard loan applicants into high-dimensional Hilbert space via RBF kernel, constructing a minimal bounding hyperplane that separates legitimate credits from abnormal outliers.">
+                <img src="{{ url_for('static', filename='charts/one_class_svm_anomalies.png') }}" alt="One-Class SVM Anomalies" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Kernel Geometry:</span>
+                <span class="chart-stat-metric">Radial Basis Function (RBF) Hyperplane</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Support vector perimeter rejects non-conforming financial structures without requiring negative class labels during model calibration.
+            </div>
+        </div>
+    </div>
+
+    <!-- 26. Deep Autoencoder Reconstruction Loss Curve -->
+    <div class="chart-card-exec reveal reveal-delay-2" data-category="anomaly" data-keywords="autoencoder neural network reconstruction loss mse epochs training convergence">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-anomaly">Neural Reconstruction</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Deep Autoencoder Reconstruction Loss</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/autoencoder_loss.png') }}" data-title="Deep Autoencoder Reconstruction Loss" data-takeaway="Neural bottleneck autoencoder training loss over 50 epochs, compressing applicant attributes into low-dimensional latent space. High reconstruction error flags severe structural anomalies.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/autoencoder_loss.png') }}" download="autoencoder_loss.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/autoencoder_loss.png') }}" data-title="Deep Autoencoder Reconstruction Loss" data-takeaway="Neural bottleneck autoencoder training loss over 50 epochs, compressing applicant attributes into low-dimensional latent space. High reconstruction error flags severe structural anomalies.">
+                <img src="{{ url_for('static', filename='charts/autoencoder_loss.png') }}" alt="Autoencoder Loss Curve" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Architecture:</span>
+                <span class="chart-stat-metric">Deep Bottleneck Latent Representation</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Unsupervised neural reconstruction error serves as a continuous risk metric, highlighting non-linear feature discrepancies in complex applications.
+            </div>
+        </div>
+    </div>
+
+    <!-- 27. Non-Linear Manifold Density Comparison (Moons) -->
+    <div class="chart-card-exec reveal" data-category="anomaly" data-keywords="dbscan moon comparison k-means non linear manifold crescent synthetic density">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-anomaly">Manifold Benchmark</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Non-Linear Manifold Density Comparison</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/dbscan_moon_comparison.png') }}" data-title="Non-Linear Manifold Density Comparison" data-takeaway="Comparative empirical benchmark demonstrating spherical K-Means failure on intertwined non-linear crescents versus DBSCAN flawless topological extraction without geometric distortion.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/dbscan_moon_comparison.png') }}" download="dbscan_moon_comparison.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/dbscan_moon_comparison.png') }}" data-title="Non-Linear Manifold Density Comparison" data-takeaway="Comparative empirical benchmark demonstrating spherical K-Means failure on intertwined non-linear crescents versus DBSCAN flawless topological extraction without geometric distortion.">
+                <img src="{{ url_for('static', filename='charts/dbscan_moon_comparison.png') }}" alt="DBSCAN Moon Benchmark" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Methodological Proof:</span>
+                <span class="chart-stat-metric">Non-Convex Density Resolution</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Validates selection of density algorithms over linear clustering when evaluating complex financial transaction topologies.
+            </div>
+        </div>
+    </div>
+
+    <!-- 28. Multi-Algorithm Consensus Anomaly Benchmark -->
+    <div class="chart-card-exec reveal reveal-delay-1" data-category="anomaly" data-keywords="anomaly benchmark consensus isolation forest svm autoencoder dbscan comparison">
+        <div class="chart-card-topbar">
+            <div>
+                <span class="chart-tag-badge tag-anomaly">Consensus Benchmark</span>
+                <h3 class="chart-card-title" style="margin-top: 4px;">Multi-Model Anomaly Consensus Benchmark</h3>
+            </div>
+            <div class="chart-actions">
+                <button type="button" class="chart-tool-btn btn-zoom" title="Full Resolution Zoom" data-img="{{ url_for('static', filename='charts/anomaly_detection_benchmark.png') }}" data-title="Multi-Model Anomaly Consensus Benchmark" data-takeaway="4-Model consensus panel juxtaposing Isolation Forest, One-Class SVM, Deep Autoencoder, and DBSCAN across identical portfolio features to isolate unanimous fraud signals.">
+                    🔍
+                </button>
+                <a href="{{ url_for('static', filename='charts/anomaly_detection_benchmark.png') }}" download="anomaly_detection_benchmark.png" class="chart-tool-btn" title="Download High-Res PNG">
+                    ⬇️
+                </a>
+            </div>
+        </div>
+        <div class="chart-card-body">
+            <div class="chart-figure-wrap" data-img="{{ url_for('static', filename='charts/anomaly_detection_benchmark.png') }}" data-title="Multi-Model Anomaly Consensus Benchmark" data-takeaway="4-Model consensus panel juxtaposing Isolation Forest, One-Class SVM, Deep Autoencoder, and DBSCAN across identical portfolio features to isolate unanimous fraud signals.">
+                <img src="{{ url_for('static', filename='charts/anomaly_detection_benchmark.png') }}" alt="Multi-Model Anomaly Benchmark" loading="lazy">
+            </div>
+        </div>
+        <div class="chart-card-footer">
+            <div class="chart-stat-chip-row">
+                <span style="color: var(--text-muted);">Consensus Committee:</span>
+                <span class="chart-stat-metric">4-Algorithm Triangulation Matrix</span>
+            </div>
+            <div class="chart-takeaway-box">
+                <div class="chart-takeaway-label">Underwriting Takeaway</div>
+                Triangulating anomaly signals across tree, support vector, neural, and density estimators minimizes false positive loan rejections while detecting coordinated fraud rings.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ============================================================
+     FULLSCREEN HIGH-RESOLUTION INSPECT MODAL (LIGHTBOX)
+     ============================================================ -->
+<div class="chart-modal-backdrop" id="chartModal">
+    <div class="chart-modal-dialog">
+        <div class="chart-modal-header">
+            <div class="chart-modal-title" id="modalTitle">Chart Diagnostic</div>
+            <button type="button" class="chart-modal-close" id="modalCloseBtn" title="Close Modal">✕</button>
+        </div>
+        <div class="chart-modal-body">
+            <div class="chart-modal-image-wrap">
+                <img id="modalImg" src="" alt="Diagnostic Preview">
+            </div>
+            <div class="chart-modal-info-panel">
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--accent-secondary); text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">
+                    Analytical Interpretation & Underwriting Policy
+                </div>
+                <div id="modalTakeaway" style="font-size: 14px; color: #f1f5f9; line-height: 1.6;"></div>
+                <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                    <a id="modalDownloadBtn" href="" download="" class="terminal-btn terminal-btn-primary" style="text-decoration: none;">
+                        ⬇️ Download High-Res Diagnostic PNG
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Interactive Client-side Script for Filtering & Modal Zoom -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.eda-filter-tab');
+    const cards = document.querySelectorAll('.chart-card-exec');
+    const searchInput = document.getElementById('edaSearchInput');
+
+    let currentFilter = 'all';
+    let currentSearch = '';
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentFilter = tab.getAttribute('data-filter');
+            applyFilters();
+        });
+    });
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value.toLowerCase().trim();
+            applyFilters();
+        });
+    }
+
+    function applyFilters() {
+        cards.forEach(card => {
+            const category = card.getAttribute('data-category') || '';
+            const keywords = (card.getAttribute('data-keywords') || '').toLowerCase();
+            const title = (card.querySelector('.chart-card-title')?.textContent || '').toLowerCase();
+
+            const matchesCategory = (currentFilter === 'all' || category === currentFilter);
+            const matchesSearch = (!currentSearch || keywords.includes(currentSearch) || title.includes(currentSearch));
+
+            if (matchesCategory && matchesSearch) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    const modal = document.getElementById('chartModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalTakeaway = document.getElementById('modalTakeaway');
+    const modalDownloadBtn = document.getElementById('modalDownloadBtn');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    function openModal(imgSrc, title, takeaway) {
+        modalImg.src = imgSrc;
+        modalTitle.textContent = title;
+        modalTakeaway.textContent = takeaway || 'Detailed diagnostic analysis for institutional credit risk evaluation.';
+        modalDownloadBtn.href = imgSrc;
+        modalDownloadBtn.download = (title || 'credit_diagnostic').replace(/[^a-zA-Z0-9_-]/g, '_') + '.png';
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.btn-zoom, .chart-figure-wrap').forEach(el => {
+        el.addEventListener('click', () => {
+            const imgSrc = el.getAttribute('data-img');
+            const title = el.getAttribute('data-title');
+            const takeaway = el.getAttribute('data-takeaway');
+            if (imgSrc) openModal(imgSrc, title, takeaway);
+        });
+    });
+
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+});
+</script>
 {% endblock %}

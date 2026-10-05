@@ -122,8 +122,87 @@
     Dataset successfully split into training (80%) and testing (20%) sets.
 </p>
 
+<!-- ============================================================
+     INTERACTIVE PARTITION REPL TERMINAL (Compact & Sober)
+     ============================================================ -->
+<div class="terminal-wrapper-sober" style="margin-bottom: 44px;">
+    <!-- Terminal Backdrop Overlay for Fullscreen Mode -->
+    <div class="terminal-backdrop-overlay" id="terminalBackdrop"></div>
+
+    <!-- Restorable Dock Pill when Terminal is closed -->
+    <div class="terminal-restore-pill" id="terminalRestorePill" title="Click to reopen the Preprocessing Terminal">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #38bdf8;"></span>
+            <span style="font-family: var(--font-mono); font-size: 13px; color: #f1f5f9; font-weight: 500;">
+                Terminal Session Suspended
+            </span>
+            <span style="font-size: 12px; color: #94a3b8;">&middot; Click to restore REPL</span>
+        </div>
+        <button type="button" class="terminal-btn" style="pointer-events: none;">
+            Open Terminal
+        </button>
+    </div>
+
+    <div class="terminal-container" id="replTerminal">
+        <!-- Terminal Header with Functional macOS Traffic Lights -->
+        <div class="terminal-header" id="terminalHeader">
+            <div class="terminal-traffic-lights" title="Window controls (Red: Close, Yellow: Minimize, Green: Fullscreen)">
+                <button type="button" class="traffic-dot dot-red" id="dotClose" title="Close window"></button>
+                <button type="button" class="traffic-dot dot-yellow" id="dotMinimize" title="Minimize window"></button>
+                <button type="button" class="traffic-dot dot-green" id="dotMaximize" title="Fullscreen mode (Esc to exit)"></button>
+            </div>
+            <div class="terminal-title-center">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="4 17 10 11 4 5"></polyline>
+                    <line x1="12" y1="19" x2="20" y2="19"></line>
+                </svg>
+                <span>terminal &mdash; python3 (train_df, test_df)</span>
+                <span class="terminal-badge" id="terminalBadgeStatus">Train: {{ train_count or 800 }} &times; 21 &middot; Test: {{ test_count or 200 }} &times; 21</span>
+            </div>
+            <div class="terminal-top-actions">
+                <button type="button" class="terminal-btn" id="clearTerminalBtn" title="Clear terminal output">
+                    Clear
+                </button>
+                <button type="button" class="terminal-btn terminal-btn-primary" id="runCodeBtn" title="Execute Code (Ctrl+Enter)">
+                    Run &crarr;
+                </button>
+            </div>
+        </div>
+
+        <!-- Muted Quick Query Chips -->
+        <div class="terminal-chips-bar">
+            <span class="terminal-chips-label">Quick:</span>
+            <button type="button" class="terminal-chip" data-cmd="train_df.shape">train_df.shape</button>
+            <button type="button" class="terminal-chip" data-cmd="test_df.shape">test_df.shape</button>
+            <button type="button" class="terminal-chip" data-cmd="train_df.head(5)">train_df.head()</button>
+            <button type="button" class="terminal-chip" data-cmd="test_df.head(5)">test_df.head()</button>
+            <button type="button" class="terminal-chip" data-cmd="train_df['Creditability'].value_counts(normalize=True)">train target %</button>
+            <button type="button" class="terminal-chip" data-cmd="test_df['Creditability'].value_counts(normalize=True)">test target %</button>
+            <button type="button" class="terminal-chip" data-cmd="X_train.shape">X_train.shape</button>
+        </div>
+
+        <!-- Terminal Output Stream (Compact Default Height: 260px) -->
+        <div class="terminal-console-log" id="terminalLog">
+            <div class="terminal-welcome-sober">
+                <div># Python 3.13 session initialized. Partitions bound to 'train_df' (800 &times; 21) and 'test_df' (200 &times; 21).</div>
+                <div># Also available: 'X_train', 'X_test', 'y_train', 'y_test', 'df'.</div>
+                <div># Run any Pandas command below or click a quick snippet.</div>
+            </div>
+        </div>
+
+        <!-- Terminal Interactive Input Bar -->
+        <div class="terminal-input-bar">
+            <span class="terminal-prompt-prefix">split &gt;</span>
+            <input type="text" id="terminalCodeInput" class="terminal-code-input" placeholder="e.g. train_df.shape, test_df.head(), train_df['Credit_Amount'].mean()..." autocomplete="off" spellcheck="false">
+            <button type="button" class="terminal-inline-run-btn" id="inlineRunBtn" title="Run Query (Enter)">
+                <span>Run</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 <div class="section-block reveal">
-    <div class="section-label">// Training Set</div>
+    <div class="section-label">Training Set</div>
     <h3 class="section-heading">Training Data Preview (First 5 Rows)</h3>
     <div class="table-container">
         {{ train_rows|safe }}
@@ -131,10 +210,365 @@
 </div>
 
 <div class="section-block reveal reveal-delay-1">
-    <div class="section-label">// Testing Set</div>
+    <div class="section-label">Testing Set</div>
     <h3 class="section-heading">Testing Data Preview (First 5 Rows)</h3>
     <div class="table-container">
         {{ test_rows|safe }}
     </div>
 </div>
+
+<!-- JavaScript Terminal Execution Logic -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('terminalCodeInput');
+    const runBtn = document.getElementById('runCodeBtn');
+    const inlineRunBtn = document.getElementById('inlineRunBtn');
+    const clearBtn = document.getElementById('clearTerminalBtn');
+    const log = document.getElementById('terminalLog');
+    const chips = document.querySelectorAll('.terminal-chip');
+
+    // Functional macOS Traffic Lights & Window Elements
+    const replTerminal = document.getElementById('replTerminal');
+    const terminalHeader = document.getElementById('terminalHeader');
+    const dotClose = document.getElementById('dotClose');
+    const dotMinimize = document.getElementById('dotMinimize');
+    const dotMaximize = document.getElementById('dotMaximize');
+    const terminalRestorePill = document.getElementById('terminalRestorePill');
+    const terminalBackdrop = document.getElementById('terminalBackdrop');
+    const terminalBadgeStatus = document.getElementById('terminalBadgeStatus');
+
+    const defaultBadgeText = 'Train: 800 × 21 · Test: 200 × 21';
+
+    // 1. Red Dot: Close / Suspend window
+    if (dotClose) {
+        dotClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            exitFullscreen();
+            replTerminal.classList.add('terminal-closed');
+            if (terminalRestorePill) terminalRestorePill.classList.add('visible');
+        });
+    }
+
+    // Restore Terminal Pill Click
+    if (terminalRestorePill) {
+        terminalRestorePill.addEventListener('click', () => {
+            replTerminal.classList.remove('terminal-closed');
+            terminalRestorePill.classList.remove('visible');
+            input.focus();
+            scrollToBottom();
+        });
+    }
+
+    // 2. Yellow Dot: Minimize / Collapse to titlebar
+    if (dotMinimize) {
+        dotMinimize.addEventListener('click', (e) => {
+            e.stopPropagation();
+            exitFullscreen();
+            const isMin = replTerminal.classList.toggle('terminal-minimized');
+            if (isMin) {
+                terminalBadgeStatus.textContent = 'Minimized (Click to expand)';
+                terminalBadgeStatus.style.borderColor = '#fbbf24';
+                terminalBadgeStatus.style.color = '#fbbf24';
+            } else {
+                terminalBadgeStatus.textContent = defaultBadgeText;
+                terminalBadgeStatus.style.borderColor = '';
+                terminalBadgeStatus.style.color = '';
+                input.focus();
+                scrollToBottom();
+            }
+        });
+    }
+
+    // Clicking header when minimized un-minimizes it
+    if (terminalHeader) {
+        terminalHeader.addEventListener('click', (e) => {
+            if (replTerminal.classList.contains('terminal-minimized') && !e.target.closest('.traffic-dot')) {
+                replTerminal.classList.remove('terminal-minimized');
+                terminalBadgeStatus.textContent = defaultBadgeText;
+                terminalBadgeStatus.style.borderColor = '';
+                terminalBadgeStatus.style.color = '';
+                input.focus();
+                scrollToBottom();
+            }
+        });
+    }
+
+    // 3. Green Dot: Maximize / Fullscreen Theater Mode
+    function enterFullscreen() {
+        replTerminal.classList.remove('terminal-minimized');
+        replTerminal.classList.add('terminal-maximized');
+        if (terminalBackdrop) terminalBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        terminalBadgeStatus.textContent = 'Fullscreen Mode (Esc to Exit)';
+        terminalBadgeStatus.style.borderColor = '#34d399';
+        terminalBadgeStatus.style.color = '#34d399';
+        input.focus();
+        scrollToBottom();
+    }
+
+    function exitFullscreen() {
+        if (replTerminal && replTerminal.classList.contains('terminal-maximized')) {
+            replTerminal.classList.remove('terminal-maximized');
+            if (terminalBackdrop) terminalBackdrop.classList.remove('active');
+            document.body.style.overflow = '';
+            terminalBadgeStatus.textContent = defaultBadgeText;
+            terminalBadgeStatus.style.borderColor = '';
+            terminalBadgeStatus.style.color = '';
+            input.focus();
+            scrollToBottom();
+        }
+    }
+
+    if (dotMaximize) {
+        dotMaximize.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (replTerminal.classList.contains('terminal-maximized')) {
+                exitFullscreen();
+            } else {
+                enterFullscreen();
+            }
+        });
+    }
+
+    if (terminalBackdrop) {
+        terminalBackdrop.addEventListener('click', exitFullscreen);
+    }
+
+    let commandHistory = JSON.parse(localStorage.getItem('creditfair_preprocess_repl_history') || '[]');
+    let historyIdx = -1;
+
+    // Focus input on load
+    input.focus();
+
+    function scrollToBottom() {
+        requestAnimationFrame(() => {
+            log.scrollTop = log.scrollHeight;
+        });
+    }
+
+    // Quick Chips click handler
+    chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            const cmd = chip.getAttribute('data-cmd');
+            input.value = cmd;
+            executeCommand(cmd);
+        });
+    });
+
+    // Run Button click handlers
+    if (runBtn) {
+        runBtn.addEventListener('click', () => {
+            const cmd = input.value.trim();
+            if (cmd) executeCommand(cmd);
+        });
+    }
+
+    if (inlineRunBtn) {
+        inlineRunBtn.addEventListener('click', () => {
+            const cmd = input.value.trim();
+            if (cmd) executeCommand(cmd);
+        });
+    }
+
+    // Clear Terminal Output
+    clearBtn.addEventListener('click', () => {
+        log.innerHTML = `
+            <div class="terminal-welcome-sober">
+                <div># Terminal buffer cleared · Session active.</div>
+            </div>
+        `;
+        input.focus();
+    });
+
+    // Keydown handler (Enter, Ctrl+Enter, Up/Down arrow history, Escape for Fullscreen)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && replTerminal.classList.contains('terminal-maximized')) {
+            exitFullscreen();
+        }
+    });
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const cmd = input.value.trim();
+            if (cmd) executeCommand(cmd);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (commandHistory.length > 0) {
+                if (historyIdx === -1) historyIdx = commandHistory.length - 1;
+                else if (historyIdx > 0) historyIdx--;
+                input.value = commandHistory[historyIdx] || '';
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historyIdx !== -1) {
+                if (historyIdx < commandHistory.length - 1) {
+                    historyIdx++;
+                    input.value = commandHistory[historyIdx] || '';
+                } else {
+                    historyIdx = -1;
+                    input.value = '';
+                }
+            }
+        }
+    });
+
+    function executeCommand(cmd) {
+        if (!cmd) return;
+
+        // Save history
+        if (!commandHistory.includes(cmd)) {
+            commandHistory.push(cmd);
+            if (commandHistory.length > 50) commandHistory.shift();
+            localStorage.setItem('creditfair_preprocess_repl_history', JSON.stringify(commandHistory));
+        }
+        historyIdx = -1;
+
+        // Create temporary executing entry in terminal
+        const entryId = 'entry_' + Date.now();
+        const entry = document.createElement('div');
+        entry.className = 'terminal-entry';
+        entry.id = entryId;
+
+        entry.innerHTML = `
+            <div class="terminal-entry-line">
+                <div class="terminal-entry-cmd">
+                    <span class="terminal-ps1">split &gt;</span>
+                    <span class="terminal-cmd-text">${escapeHtml(cmd)}</span>
+                </div>
+                <div class="terminal-entry-meta">
+                    <span style="color: #64748b; font-size: 11px;">running...</span>
+                </div>
+            </div>
+            <div class="terminal-entry-output">
+                <div style="color: #64748b; font-size: 11.5px; font-family: var(--font-mono);">&hellip;</div>
+            </div>
+        `;
+        log.appendChild(entry);
+        scrollToBottom();
+
+        // Clear input field for next command
+        input.value = '';
+
+        // Dispatch request to backend terminal API
+        fetch('/api/terminal_query', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: cmd })
+        })
+        .then(res => res.json())
+        .then(data => {
+            renderEntryResult(entry, cmd, data);
+        })
+        .catch(err => {
+            renderEntryResult(entry, cmd, {
+                success: false,
+                error_type: 'NetworkError',
+                error: 'Failed to communicate with local server: ' + err.message,
+                execution_ms: 0
+            });
+        });
+    }
+
+    function renderEntryResult(entryElem, cmd, data) {
+        if (!entryElem) return;
+
+        const metaElem = entryElem.querySelector('.terminal-entry-meta');
+        const outputElem = entryElem.querySelector('.terminal-entry-output');
+
+        if (data.success) {
+            const execMs = data.execution_ms != null ? data.execution_ms : 0;
+            const isDataFrame = (data.type === 'dataframe');
+
+            // Metadata: timing + shape + optional table/text toggle + copy
+            let metaHtml = `<span class="terminal-timing">${execMs}ms</span>`;
+            if (data.shape) {
+                metaHtml += `<span class="terminal-shape-pill">${escapeHtml(data.shape)}</span>`;
+            }
+            if (isDataFrame) {
+                metaHtml += `<button type="button" class="terminal-btn-sm btn-view-toggle">Text</button>`;
+            }
+            metaHtml += `<button type="button" class="terminal-btn-sm btn-copy">Copy</button>`;
+            metaElem.innerHTML = metaHtml;
+
+            // Output content
+            if (isDataFrame) {
+                outputElem.innerHTML = `
+                    <div class="terminal-table-wrapper terminal-view-table">
+                        ${data.html_output}
+                    </div>
+                    <pre class="terminal-text-block terminal-view-text" style="display: none;">${escapeHtml(data.text_output)}</pre>
+                `;
+
+                // Wire Table vs Text toggle
+                const toggleBtn = metaElem.querySelector('.btn-view-toggle');
+                const tableWrap = outputElem.querySelector('.terminal-view-table');
+                const textWrap = outputElem.querySelector('.terminal-view-text');
+
+                if (toggleBtn && tableWrap && textWrap) {
+                    toggleBtn.addEventListener('click', () => {
+                        if (tableWrap.style.display !== 'none') {
+                            tableWrap.style.display = 'none';
+                            textWrap.style.display = 'block';
+                            toggleBtn.textContent = 'Table';
+                        } else {
+                            tableWrap.style.display = 'inline-block';
+                            textWrap.style.display = 'none';
+                            toggleBtn.textContent = 'Text';
+                        }
+                    });
+                }
+            } else if (data.type === 'scalar') {
+                outputElem.innerHTML = `<div class="terminal-scalar-output">${escapeHtml(data.text_output)}</div>`;
+            } else {
+                // Series, stdout, info, summaries - clean preformatted monospaced text!
+                let textToDisplay = data.text_output || '';
+                if (data.stdout && data.stdout.trim() && data.type !== 'stdout') {
+                    textToDisplay = data.stdout + '\n' + textToDisplay;
+                }
+                outputElem.innerHTML = `<pre class="terminal-text-block">${escapeHtml(textToDisplay)}</pre>`;
+            }
+
+            // Wire Copy button
+            const copyBtn = metaElem.querySelector('.btn-copy');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    const textToCopy = data.text_output || data.stdout || '';
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        copyBtn.textContent = 'Copied';
+                        setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1500);
+                    });
+                });
+            }
+        } else {
+            // Error Output
+            metaElem.innerHTML = `<span style="color: #f43f5e; font-size: 11px; font-family: var(--font-mono);">${data.execution_ms || 0}ms</span>`;
+            outputElem.innerHTML = `
+                <div style="padding: 6px 0; font-family: var(--font-mono); font-size: 11.5px; color: #f87171; line-height: 1.5;">
+                    <span style="font-weight: 600; color: #f43f5e;">${escapeHtml(data.error_type || 'Error')}:</span>
+                    <span>${escapeHtml(data.error || 'Execution failed')}</span>
+                </div>
+            `;
+        }
+
+        scrollToBottom();
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+});
+</script>
+<style>
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
 {% endblock %}

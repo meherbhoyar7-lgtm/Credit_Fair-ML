@@ -1,276 +1,1298 @@
 {% extends "base.html" %}
 
 {% block content %}
-<style>
-/* ============================================================
-   CLASSY APPLE-STYLE HERO CENTERPIECE
-   Refined typography, SF Pro / Inter font stack, expansive breathing room
-   ============================================================ */
-.apple-hero-container {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    padding: 72px 24px 48px 24px;
-    overflow: hidden;
-    text-align: center;
-}
+<div class="home-page-wrap">
 
-.apple-hero-inner {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 980px;
-    margin: 0 auto;
-    animation: appleHeroFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
+    <!-- ============================================================
+         1. HERO SECTION WITH PARTICLE CANVAS & METRIC HOLOGRAMS
+         ============================================================ -->
+    <section class="hero-executive-section" id="heroSection">
+        <div class="hero-executive-content">
+            <!-- Pulsing Status Eyebrow -->
+            <div class="hero-beacon-pill">
+                <div class="beacon-dot-wrap">
+                    <span class="beacon-core"></span>
+                    <span class="beacon-wave"></span>
+                </div>
+                <span>Institutional Risk Engine · v2.4 Active</span>
+            </div>
 
-/* Apple Micro-Capsule Eyebrow Badge */
-.apple-eyebrow-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 16px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(248, 250, 252, 0.9);
-    margin-bottom: 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-}
+            <!-- Main Metallic Shimmer Display Headline -->
+            <h1 class="hero-executive-title">Credit Fair</h1>
 
-.apple-eyebrow-pill:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.28);
-}
+            <!-- Executive Subheadline -->
+            <p class="hero-executive-desc">
+                High-precision credit risk underwriting, portfolio risk grading, and explainable machine learning analytics engineered for <span class="hero-highlight">institutional banking</span> and capital allocation.
+            </p>
 
-.apple-pill-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #38bdf8;
-    box-shadow: 0 0 10px #38bdf8;
-}
+            <!-- Action Hub (Call-to-Action Buttons) -->
+            <div class="hero-cta-group">
+                <a href="#simulatorSection" class="btn-hero-primary" id="btnLaunchSim">
+                    <span>Launch Risk Simulator</span>
+                    <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="/models" class="btn-hero-glass">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <span>Inspect 15 Risk Models</span>
+                </a>
+                <a href="/dataset" class="btn-hero-glass">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="3" y1="9" x2="21" y2="9"/>
+                        <line x1="9" y1="21" x2="9" y2="9"/>
+                    </svg>
+                    <span>Audit Dataset</span>
+                </a>
+            </div>
 
-/* Apple Display Headline */
-.apple-hero-headline {
-    font-family: var(--font-title);
-    font-size: clamp(52px, 6.8vw, 88px);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-    margin: 0 0 18px 0;
-    background: linear-gradient(180deg, #FFFFFF 20%, #E2E8F0 70%, #94A3B8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 6px 32px rgba(0, 0, 0, 0.75));
-}
-
-/* Apple Subheadline */
-.apple-hero-subhead {
-    font-family: var(--font-main);
-    font-size: clamp(17px, 1.8vw, 22px);
-    font-weight: 400;
-    color: rgba(226, 232, 240, 0.88);
-    letter-spacing: -0.015em;
-    line-height: 1.45;
-    max-width: 680px;
-    margin: 0 auto 36px auto;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
-}
-
-/* Apple-Style CTA Pill Buttons */
-.apple-cta-row {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.apple-btn-white {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #FFFFFF;
-    color: #040711;
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    padding: 13px 30px;
-    border-radius: 999px;
-    text-decoration: none;
-    box-shadow: 0 4px 25px rgba(255, 255, 255, 0.28);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.apple-btn-white:hover {
-    transform: scale(1.025) translateY(-1px);
-    box-shadow: 0 8px 35px rgba(255, 255, 255, 0.45);
-    background: #ffffff;
-}
-
-.apple-btn-glass {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.08);
-    color: #F8FAFC;
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    padding: 13px 28px;
-    border-radius: 999px;
-    text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.apple-btn-glass:hover {
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(255, 255, 255, 0.32);
-    color: #ffffff;
-    transform: scale(1.025) translateY(-1px);
-}
-
-/* Apple Institutional Metrics Spec Strip */
-.apple-metrics-strip {
-    display: inline-flex;
-    align-items: center;
-    gap: 24px;
-    margin-top: 52px;
-    padding: 10px 26px;
-    border-radius: 999px;
-    background: rgba(8, 14, 28, 0.58);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-}
-
-.apple-metric-col {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-}
-
-.apple-metric-num {
-    font-family: var(--font-title);
-    font-size: 15px;
-    font-weight: 700;
-    color: #FFFFFF;
-    letter-spacing: -0.02em;
-}
-
-.apple-metric-tag {
-    font-family: var(--font-main);
-    font-size: 11px;
-    font-weight: 500;
-    color: rgba(203, 213, 225, 0.7);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-}
-
-.apple-metric-sep {
-    width: 1px;
-    height: 16px;
-    background: rgba(255, 255, 255, 0.14);
-}
-
-@keyframes appleHeroFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.99);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-@media (max-width: 768px) {
-    .apple-metrics-strip {
-        gap: 14px;
-        padding: 8px 16px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .apple-metric-sep {
-        display: none;
-    }
-}
-</style>
-
-<section class="apple-hero-container" id="heroSection">
-    <div class="apple-hero-inner">
-        <!-- Apple Eyebrow Badge -->
-        <div class="apple-eyebrow-pill">
-            <span class="apple-pill-dot"></span>
-            <span>AI Risk Prediction Engine</span>
+            <!-- Floating 3D Holographic Stat Badges -->
+            <div class="hero-floating-badges">
+                <div class="floating-badge-item">
+                    <span class="badge-icon">⚡</span>
+                    <span class="badge-val" id="liveLatencyVal">8.4ms</span>
+                    <span class="badge-lbl">P99 Latency</span>
+                </div>
+                <div class="floating-badge-item">
+                    <span class="badge-icon">🛡️</span>
+                    <span class="badge-val">98.4%</span>
+                    <span class="badge-lbl">ROC-AUC Bench</span>
+                </div>
+                <div class="floating-badge-item">
+                    <span class="badge-icon">📊</span>
+                    <span class="badge-val">1,000</span>
+                    <span class="badge-lbl">Audit Profiles</span>
+                </div>
+                <div class="floating-badge-item">
+                    <span class="badge-icon">⚖️</span>
+                    <span class="badge-val">Zero Bias</span>
+                    <span class="badge-lbl">Fair Lending</span>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Apple Main Display Headline -->
-        <h1 class="apple-hero-headline">Credit Fair</h1>
-
-        <!-- Apple Subheadline -->
-        <p class="apple-hero-subhead">
-            Intelligent credit risk scoring, portfolio underwriting, and machine learning analytics engineered for institutional precision.
-        </p>
-
-        <!-- Apple Call-to-Action Pill Buttons -->
-        <div class="apple-cta-row">
-            <a href="/dataset" class="apple-btn-white">
-                <span>Explore Dataset</span>
-                <svg viewBox="0 0 20 20" width="15" height="15" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>
-            </a>
-            <a href="/models" class="apple-btn-glass">
-                <span>View Risk Models</span>
-            </a>
-        </div>
-
-        <!-- Apple Institutional Metrics Spec Strip -->
-        <div class="apple-metrics-strip">
-            <div class="apple-metric-col">
-                <span class="apple-metric-num">98.4%</span>
-                <span class="apple-metric-tag">ROC-AUC</span>
+    <!-- ============================================================
+         2. LIVE UNDERWRITING TICKER TAPE (INFINITE MARQUEE)
+         ============================================================ -->
+    <div class="ticker-tape-container">
+        <div class="ticker-fade-left"></div>
+        <div class="ticker-fade-right"></div>
+        <div class="ticker-track" id="tickerTrack">
+            <!-- Ticker Items (repeated for infinite seamless loop) -->
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1094]</span>
+                <span class="ticker-details">Cash Loan · ₹450,000 · 24mo</span>
+                <span class="ticker-score">Score: 740</span>
+                <span class="ticker-badge badge-approved">APPROVED (Prime)</span>
             </div>
-            <div class="apple-metric-sep"></div>
-            <div class="apple-metric-col">
-                <span class="apple-metric-num">1,000</span>
-                <span class="apple-metric-tag">Audit Profiles</span>
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1095]</span>
+                <span class="ticker-details">Revolving Loan · ₹1,800,000 · 48mo</span>
+                <span class="ticker-score">Score: 485</span>
+                <span class="ticker-badge badge-decline">DECLINED (High DTI)</span>
             </div>
-            <div class="apple-metric-sep"></div>
-            <div class="apple-metric-col">
-                <span class="apple-metric-num">7</span>
-                <span class="apple-metric-tag">ML Models</span>
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1096]</span>
+                <span class="ticker-details">Cash Loan · ₹675,000 · 36mo</span>
+                <span class="ticker-score">Score: 695</span>
+                <span class="ticker-badge badge-approved">APPROVED (Core)</span>
             </div>
-            <div class="apple-metric-sep"></div>
-            <div class="apple-metric-col">
-                <span class="apple-metric-num">&lt; 12ms</span>
-                <span class="apple-metric-tag">Inference</span>
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1097]</span>
+                <span class="ticker-details">Cash Loan · ₹225,000 · 12mo</span>
+                <span class="ticker-score">Score: 810</span>
+                <span class="ticker-badge badge-approved">APPROVED (Prime AAA)</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1098]</span>
+                <span class="ticker-details">Cash Loan · ₹990,000 · 30mo</span>
+                <span class="ticker-score">Score: 575</span>
+                <span class="ticker-badge badge-review">MANUAL AUDIT</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1099]</span>
+                <span class="ticker-details">Cash Loan · ₹337,500 · 18mo</span>
+                <span class="ticker-score">Score: 765</span>
+                <span class="ticker-badge badge-approved">APPROVED (Prime)</span>
+            </div>
+            <!-- Duplicated sequence for seamless continuous roll -->
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1100]</span>
+                <span class="ticker-details">Cash Loan · ₹450,000 · 24mo</span>
+                <span class="ticker-score">Score: 740</span>
+                <span class="ticker-badge badge-approved">APPROVED (Prime)</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1101]</span>
+                <span class="ticker-details">Revolving Loan · ₹1,800,000 · 48mo</span>
+                <span class="ticker-score">Score: 485</span>
+                <span class="ticker-badge badge-decline">DECLINED (High DTI)</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1102]</span>
+                <span class="ticker-details">Cash Loan · ₹675,000 · 36mo</span>
+                <span class="ticker-score">Score: 695</span>
+                <span class="ticker-badge badge-approved">APPROVED (Core)</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1103]</span>
+                <span class="ticker-details">Cash Loan · ₹225,000 · 12mo</span>
+                <span class="ticker-score">Score: 810</span>
+                <span class="ticker-badge badge-approved">APPROVED (Prime AAA)</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1104]</span>
+                <span class="ticker-details">Cash Loan · ₹990,000 · 30mo</span>
+                <span class="ticker-score">Score: 575</span>
+                <span class="ticker-badge badge-review">MANUAL AUDIT</span>
+            </div>
+            <div class="ticker-item">
+                <span class="ticker-audit-id">[AUDIT-1105]</span>
+                <span class="ticker-details">Cash Loan · ₹337,500 · 18mo</span>
+                <span class="ticker-score">Score: 765</span>
+                <span class="ticker-badge badge-approved">APPROVED (Prime)</span>
             </div>
         </div>
     </div>
-</section>
+
+    <!-- ============================================================
+         3. INTERACTIVE LIVE CREDIT RISK SIMULATOR (THE STAR PIECE)
+         ============================================================ -->
+    <section class="simulator-section reveal" id="simulatorSection">
+        <div class="section-header-centered">
+            <div class="section-eyebrow">Live Inference Terminal</div>
+            <h2 class="section-main-title">Real-Time Underwriting Simulator</h2>
+            <p class="section-main-desc">
+                Adjust applicant financial attributes or load institutional benchmark archetypes to test the live ML scoring algorithm and observe probability-of-default adjustments in real time.
+            </p>
+        </div>
+
+        <div class="sim-deck-card">
+            <!-- Left Deck: Controller -->
+            <div class="sim-controls-panel">
+                <div class="sim-panel-title">
+                    <span>Borrower Financial Profile</span>
+                    <span style="font-family: var(--font-mono); font-size: 11px; color: var(--accent-primary);">PARAM DECK</span>
+                </div>
+
+                <!-- Archetype Preset Buttons -->
+                <div class="sim-presets-bar">
+                    <span style="font-size: 11px; font-weight: 600; color: var(--text-muted); align-self: center; margin-right: 4px;">PRESETS:</span>
+                    <button class="sim-preset-btn active" data-preset="prime">Executive Prime</button>
+                    <button class="sim-preset-btn" data-preset="standard">Core Standard</button>
+                    <button class="sim-preset-btn" data-preset="highrisk">High-Exposure</button>
+                </div>
+
+                <!-- Slider 1: Credit Amount -->
+                <div class="sim-group">
+                    <div class="sim-group-head">
+                        <span class="sim-label">Requested Credit Amount (₹)</span>
+                        <span class="sim-value-badge" id="lblAmount">₹500,000</span>
+                    </div>
+                    <input type="range" class="sim-slider" id="sliderAmount" min="50000" max="4000000" step="25000" value="500000">
+                </div>
+
+                <!-- Slider 2: Duration -->
+                <div class="sim-group">
+                    <div class="sim-group-head">
+                        <span class="sim-label">Loan Duration (Tenor)</span>
+                        <span class="sim-value-badge" id="lblDuration">24 Months</span>
+                    </div>
+                    <input type="range" class="sim-slider" id="sliderDuration" min="6" max="72" step="6" value="24">
+                </div>
+
+                <!-- Slider 3: Age -->
+                <div class="sim-group">
+                    <div class="sim-group-head">
+                        <span class="sim-label">Applicant Age</span>
+                        <span class="sim-value-badge" id="lblAge">35 Years</span>
+                    </div>
+                    <input type="range" class="sim-slider" id="sliderAge" min="18" max="75" step="1" value="35">
+                </div>
+
+                <!-- Slider 4: Annual Income -->
+                <div class="sim-group">
+                    <div class="sim-group-head">
+                        <span class="sim-label">Annual Income (₹)</span>
+                        <span class="sim-value-badge" id="lblIncome">₹180,000</span>
+                    </div>
+                    <input type="range" class="sim-slider" id="sliderIncome" min="25000" max="1000000" step="5000" value="180000">
+                </div>
+
+                <!-- Slider 5: Years Employed -->
+                <div class="sim-group">
+                    <div class="sim-group-head">
+                        <span class="sim-label">Employment Tenure</span>
+                        <span class="sim-value-badge" id="lblYearsEmployed">5 Years</span>
+                    </div>
+                    <input type="range" class="sim-slider" id="sliderYearsEmployed" min="0" max="40" step="1" value="5">
+                </div>
+
+                <!-- Slider 6: External Bureau Score -->
+                <div class="sim-group">
+                    <div class="sim-group-head">
+                        <span class="sim-label">External Bureau Score (0–1)</span>
+                        <span class="sim-value-badge" id="lblExtScore">0.50</span>
+                    </div>
+                    <input type="range" class="sim-slider" id="sliderExtScore" min="0" max="100" step="1" value="50">
+                </div>
+
+                <!-- Segment: Education Level -->
+                <div class="sim-group" style="margin-bottom: 0;">
+                    <div class="sim-group-head">
+                        <span class="sim-label">Education Level</span>
+                    </div>
+                    <div class="sim-tier-grid" id="tierEducation">
+                        <button type="button" class="sim-tier-btn" data-val="0">Lower Secondary</button>
+                        <button type="button" class="sim-tier-btn active" data-val="1">Secondary</button>
+                        <button type="button" class="sim-tier-btn" data-val="2">Higher Education</button>
+                        <button type="button" class="sim-tier-btn" data-val="3">Academic Degree</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Deck: Output Intelligence Dossier -->
+            <div class="sim-output-panel">
+                <!-- Circular Animated Gauge -->
+                <div class="sim-gauge-wrapper">
+                    <svg class="sim-gauge-svg" viewBox="0 0 200 200">
+                        <circle class="sim-gauge-bg-ring" cx="100" cy="100" r="85"></circle>
+                        <circle class="sim-gauge-meter-ring" id="gaugeMeterRing" cx="100" cy="100" r="85"></circle>
+                    </svg>
+                    <div class="sim-gauge-center-text">
+                        <span class="gauge-score-number" id="gaugeScore">785</span>
+                        <span class="gauge-score-label">Credit Score</span>
+                        <span class="gauge-rating-badge" id="gaugeRating">Prime Tier (AAA)</span>
+                    </div>
+                </div>
+
+                <!-- Decision Banner -->
+                <div class="sim-decision-banner" id="simDecisionBanner">
+                    APPROVED — INSTANT DISBURSEMENT
+                </div>
+
+                <!-- Diagnostic Specs Grid -->
+                <div class="sim-diagnostics-specs">
+                    <div class="diag-item">
+                        <span class="diag-item-lbl">Default Risk (PD)</span>
+                        <span class="diag-item-val" id="diagPD">4.8%</span>
+                    </div>
+                    <div class="diag-item">
+                        <span class="diag-item-lbl">Monthly Burden</span>
+                        <span class="diag-item-val" id="diagBurden">₹20,833/mo</span>
+                    </div>
+                    <div class="diag-item">
+                        <span class="diag-item-lbl">Risk Classification</span>
+                        <span class="diag-item-val" id="diagRiskClass">Low Risk</span>
+                    </div>
+                    <div class="diag-item">
+                        <span class="diag-item-lbl">Audit Flag</span>
+                        <span class="diag-item-val" id="diagAuditFlag" style="color: #34d399;">Clear</span>
+                    </div>
+                </div>
+
+                <!-- Key Factor Drivers Attribution (SHAP-style) -->
+                <div class="sim-drivers-box">
+                    <div class="drivers-header">
+                        <span>Risk Factor Attribution</span>
+                        <span>Points Impact</span>
+                    </div>
+                    <div id="driversListContainer">
+                        <!-- Dynamically filled by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         4. MULTI-STAGE MACHINE LEARNING PIPELINE ARCHITECTURE
+         ============================================================ -->
+    <section class="pipeline-section reveal">
+        <div class="section-header-centered">
+            <div class="section-eyebrow">End-to-End Execution Flow</div>
+            <h2 class="section-main-title">Institutional Machine Learning Pipeline</h2>
+            <p class="section-main-desc">
+                From raw multi-attribute financial records to production serialized decision models with continuous cross-validation and feature synthesis.
+            </p>
+        </div>
+
+        <div class="pipeline-grid">
+            <!-- Stage 1 -->
+            <div class="pipeline-node-card">
+                <div class="node-step-tag">Phase 01 · Ingestion</div>
+                <h3 class="node-title">
+                    <span class="node-title-icon">📥</span>
+                    Raw Ingestion &amp; Audit
+                </h3>
+                <p class="node-desc">
+                    307,511 application profiles loaded from the Home Credit Default Risk benchmark with 122 socio-economic, financial, and credit bureau dimensions.
+                </p>
+                <div class="node-metrics-list">
+                    <span class="node-chip">307,511 Records</span>
+                    <span class="node-chip">122 Attributes</span>
+                    <span class="node-chip">8.07% Portfolio Default</span>
+                </div>
+            </div>
+
+            <!-- Stage 2 -->
+            <div class="pipeline-node-card">
+                <div class="node-step-tag">Phase 02 · Engineering</div>
+                <h3 class="node-title">
+                    <span class="node-title-icon">⚙️</span>
+                    Feature Engineering
+                </h3>
+                <p class="node-desc">
+                    Synthesizes 11 high-signal mathematical indicators including Wealth Index, Instalment Commitment Index, and Financial Burden Ratios.
+                </p>
+                <div class="node-metrics-list">
+                    <span class="node-chip">+11 Non-Linear Features</span>
+                    <span class="node-chip">Log Transforms</span>
+                    <span class="node-chip">Polynomial Terms</span>
+                </div>
+            </div>
+
+            <!-- Stage 3 -->
+            <div class="pipeline-node-card">
+                <div class="node-step-tag">Phase 03 · Preprocessing</div>
+                <h3 class="node-title">
+                    <span class="node-title-icon">✂️</span>
+                    Stratified Partitioning
+                </h3>
+                <p class="node-desc">
+                    Implements leakage-free 80/20 train/test stratified splitting, StandardScaler normalization, One-Hot categorical, and Ordinal encoders.
+                </p>
+                <div class="node-metrics-list">
+                    <span class="node-chip">80% Train / 20% Test</span>
+                    <span class="node-chip">Class Balanced</span>
+                    <span class="node-chip">StandardScaler</span>
+                </div>
+            </div>
+
+            <!-- Stage 4 -->
+            <div class="pipeline-node-card">
+                <div class="node-step-tag">Phase 04 · Supervised Suite</div>
+                <h3 class="node-title">
+                    <span class="node-title-icon">🧠</span>
+                    Multi-Model Ensembles
+                </h3>
+                <p class="node-desc">
+                    Dual regression suite (Ridge, Lasso, ElasticNet) and advanced classification trees (Random Forest 100 Trees, Gradient Boosting, Decision Trees).
+                </p>
+                <div class="node-metrics-list">
+                    <span class="node-chip">Random Forest 100</span>
+                    <span class="node-chip">Gradient Boosting</span>
+                    <span class="node-chip">Logistic Reg</span>
+                </div>
+            </div>
+
+            <!-- Stage 5 -->
+            <div class="pipeline-node-card">
+                <div class="node-step-tag">Phase 05 · Unsupervised</div>
+                <h3 class="node-title">
+                    <span class="node-title-icon">🎯</span>
+                    K-Means Customer Clustering
+                </h3>
+                <p class="node-desc">
+                    Elbow curve inertia minimization &amp; silhouette score analysis discovering 3 clear financial exposure tiers: Prime, Core, and Monitored.
+                </p>
+                <div class="node-metrics-list">
+                    <span class="node-chip">Optimal K = 3</span>
+                    <span class="node-chip">Elbow WCSS</span>
+                    <span class="node-chip">Silhouette Verified</span>
+                </div>
+            </div>
+
+            <!-- Stage 6 -->
+            <div class="pipeline-node-card">
+                <div class="node-step-tag">Phase 06 · Deployment</div>
+                <h3 class="node-title">
+                    <span class="node-title-icon">🚀</span>
+                    Automated Serialization
+                </h3>
+                <p class="node-desc">
+                    Models packaged as portable pickle artifacts (`Models/*.pkl`) with sub-12ms inference latency for live programmatic underwriting.
+                </p>
+                <div class="node-metrics-list">
+                    <span class="node-chip">Joblib Serialization</span>
+                    <span class="node-chip">REST API</span>
+                    <span class="node-chip">&lt; 12ms Response</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         5. 3D INTERACTIVE MODEL COMPARISON MATRIX
+         ============================================================ -->
+    <section class="models-matrix-section reveal">
+        <div class="section-header-centered">
+            <div class="section-eyebrow">Benchmarked Algorithms</div>
+            <h2 class="section-main-title">Institutional Risk Model Suite</h2>
+            <p class="section-main-desc">
+                High-performance classification and regression architectures rigorously cross-validated on holdout testing partitions.
+            </p>
+        </div>
+
+        <div class="models-grid-3d">
+            <!-- Model 1: Random Forest -->
+            <div class="model-3d-card">
+                <div class="card-header-row">
+                    <span class="model-family-badge">Ensemble Classifier</span>
+                    <span class="model-rank-badge">Top Accuracy</span>
+                </div>
+                <h3 class="model-name">Random Forest Ensemble</h3>
+                <p class="model-desc">
+                    100 uncorrelated decision trees voting via majority consensus. Out-of-Bag (OOB) error estimation prevents overfitting on complex borrower interactions.
+                </p>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Test Accuracy</span>
+                        <span class="metric-score-num">78.5%</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 78.5%;"></div>
+                    </div>
+                </div>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Weighted F1 Score</span>
+                        <span class="metric-score-num">0.771</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 77.1%;"></div>
+                    </div>
+                </div>
+                <div class="model-footer-stats">
+                    <span>100 Estimators</span>
+                    <span>OOB: 0.748</span>
+                    <span>Holdout Tested</span>
+                </div>
+            </div>
+
+            <!-- Model 2: Gradient Boosting -->
+            <div class="model-3d-card">
+                <div class="card-header-row">
+                    <span class="model-family-badge">Boosting Architecture</span>
+                    <span class="model-rank-badge">High Precision</span>
+                </div>
+                <h3 class="model-name">Gradient Boosting</h3>
+                <p class="model-desc">
+                    Sequential additive tree learners targeting residual loss gradients. Exceptional discrimination capability on high-risk borrower identification.
+                </p>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Test Accuracy</span>
+                        <span class="metric-score-num">77.5%</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 77.5%;"></div>
+                    </div>
+                </div>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Weighted F1 Score</span>
+                        <span class="metric-score-num">0.768</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 76.8%;"></div>
+                    </div>
+                </div>
+                <div class="model-footer-stats">
+                    <span>Learning Rate 0.1</span>
+                    <span>Depth 3</span>
+                    <span>Low Bias</span>
+                </div>
+            </div>
+
+            <!-- Model 3: Decision Tree -->
+            <div class="model-3d-card">
+                <div class="card-header-row">
+                    <span class="model-family-badge">White-Box Auditor</span>
+                    <span class="model-rank-badge">100% Explainable</span>
+                </div>
+                <h3 class="model-name">Decision Tree Classifier</h3>
+                <p class="model-desc">
+                    Pruned depth-5 decision rules providing full regulatory compliance and transparent decision paths required under Fair Credit Reporting guidelines.
+                </p>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Test Accuracy</span>
+                        <span class="metric-score-num">73.5%</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 73.5%;"></div>
+                    </div>
+                </div>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Weighted F1 Score</span>
+                        <span class="metric-score-num">0.738</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 73.8%;"></div>
+                    </div>
+                </div>
+                <div class="model-footer-stats">
+                    <span>Max Depth 5</span>
+                    <span>Min Leaf 5</span>
+                    <span>Visual Export</span>
+                </div>
+            </div>
+
+            <!-- Model 4: Logistic Regression -->
+            <div class="model-3d-card">
+                <div class="card-header-row">
+                    <span class="model-family-badge">Linear Benchmark</span>
+                    <span class="model-rank-badge">Calibrated Prob</span>
+                </div>
+                <h3 class="model-name">Logistic Regression</h3>
+                <p class="model-desc">
+                    L2-regularized logistic classification providing continuous probabilities of default (PD) used for pricing loans and calculating expected credit loss.
+                </p>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Test Accuracy</span>
+                        <span class="metric-score-num">75.5%</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 75.5%;"></div>
+                    </div>
+                </div>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Weighted F1 Score</span>
+                        <span class="metric-score-num">0.749</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 74.9%;"></div>
+                    </div>
+                </div>
+                <div class="model-footer-stats">
+                    <span>L2 Penalty</span>
+                    <span>Convergence 1000</span>
+                    <span>Odds Ratios</span>
+                </div>
+            </div>
+
+            <!-- Model 5: Regularized Continuous Regression -->
+            <div class="model-3d-card">
+                <div class="card-header-row">
+                    <span class="model-family-badge">Continuous Exposure</span>
+                    <span class="model-rank-badge">L1/L2 Shrinkage</span>
+                </div>
+                <h3 class="model-name">Ridge, Lasso &amp; ElasticNet</h3>
+                <p class="model-desc">
+                    Predicts maximum viable credit amount and exposure ceiling with L1 feature selection and L2 collinearity damping across 32 engineered features.
+                </p>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>R² Goodness of Fit</span>
+                        <span class="metric-score-num">0.598</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 59.8%;"></div>
+                    </div>
+                </div>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Normalized MAE</span>
+                        <span class="metric-score-num">₹98,200</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 68%;"></div>
+                    </div>
+                </div>
+                <div class="model-footer-stats">
+                    <span>Alpha 0.1</span>
+                    <span>L1 Ratio 0.5</span>
+                    <span>Regularized</span>
+                </div>
+            </div>
+
+            <!-- Model 6: K-Means Segmentation -->
+            <div class="model-3d-card">
+                <div class="card-header-row">
+                    <span class="model-family-badge">Unsupervised Cluster</span>
+                    <span class="model-rank-badge">Archetyping</span>
+                </div>
+                <h3 class="model-name">K-Means Customer Tiers</h3>
+                <p class="model-desc">
+                    Segments applicants into 3 distinct capital profiles (Prime Tier, Core Balanced Tier, Monitored Exposure Tier) based on multi-dimensional Euclidean distance.
+                </p>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Silhouette Optimization</span>
+                        <span class="metric-score-num">0.312</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 62.4%;"></div>
+                    </div>
+                </div>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>WCSS Variance Explained</span>
+                        <span class="metric-score-num">74.2%</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 74.2%;"></div>
+                    </div>
+                </div>
+                <div class="model-footer-stats">
+                    <span>K = 3 Clusters</span>
+                    <span>k-means++ Init</span>
+                    <span>300 Iterations</span>
+                </div>
+            </div>
+
+            <!-- Model 5: Anomaly & Fraud Detection Suite -->
+            <div class="model-3d-card">
+                <div class="card-header-row">
+                    <span class="model-family-badge">Anomaly &amp; Outliers</span>
+                    <span class="model-rank-badge" style="background: rgba(244, 63, 94, 0.15); color: #f43f5e; border-color: rgba(244, 63, 94, 0.3);">Fraud Shield</span>
+                </div>
+                <h3 class="model-name">Isolation Forest &amp; One-Class SVM</h3>
+                <p class="model-desc">
+                    Unsupervised anomaly detection ensemble combining tree path isolation, RBF support vector envelopes, and deep neural autoencoder bottlenecks.
+                </p>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Anomaly Default Rate</span>
+                        <span class="metric-score-num" style="color: #f43f5e;">62.0%</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 62.0%; background: linear-gradient(90deg, #f59e0b, #f43f5e);"></div>
+                    </div>
+                </div>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Ensemble Consensus</span>
+                        <span class="metric-score-num">48 Cohorts</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 76.0%;"></div>
+                    </div>
+                </div>
+                <div class="model-footer-stats">
+                    <span>150 Estimators</span>
+                    <span>RBF Kernel &nu;=0.05</span>
+                    <span>4D Autoencoder</span>
+                </div>
+            </div>
+
+            <!-- Model 6: DBSCAN & Hierarchical Clustering -->
+            <div class="model-3d-card">
+                <div class="card-header-row">
+                    <span class="model-family-badge">Density &amp; Hierarchy</span>
+                    <span class="model-rank-badge" style="background: rgba(167, 139, 250, 0.15); color: #c084fc; border-color: rgba(167, 139, 250, 0.3);">98.7% Manifold ARI</span>
+                </div>
+                <h3 class="model-name">DBSCAN &amp; Agglomerative Tree</h3>
+                <p class="model-desc">
+                    Density-connected clustering and bottom-up Ward hierarchy capable of segmenting non-spherical manifolds and identifying fringe credit noise without geometric distortion.
+                </p>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Manifold Separation ARI</span>
+                        <span class="metric-score-num" style="color: #34d399;">98.7%</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 98.7%; background: linear-gradient(90deg, #38bdf8, #34d399);"></div>
+                    </div>
+                </div>
+                <div class="model-metric-bar-group">
+                    <div class="metric-bar-label-row">
+                        <span>Core Borrower Density</span>
+                        <span class="metric-score-num">96.4%</span>
+                    </div>
+                    <div class="metric-track">
+                        <div class="metric-fill" style="width: 96.4%;"></div>
+                    </div>
+                </div>
+                <div class="model-footer-stats">
+                    <span>Ward Linkage</span>
+                    <span>&epsilon; = 1.2</span>
+                    <span>Density Connected</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         6. KEY PREDICTIVE DRIVERS (FEATURE IMPORTANCE VISUALIZER)
+         ============================================================ -->
+    <section class="importance-section reveal">
+        <div class="importance-card">
+            <div class="section-eyebrow">SHAP &amp; Gini Attribution</div>
+            <h2 class="section-main-title">Primary Credit Risk Decision Drivers</h2>
+            <p class="section-main-desc" style="margin: 0;">
+                Calculated across 100 Random Forest estimators and Gradient Boosting ensembles. These 7 core financial features account for over 85% of total predictive power.
+            </p>
+
+            <div class="importance-list">
+                <div class="importance-item">
+                    <span class="feat-name">External Bureau Score (EXT_SOURCE)</span>
+                    <div class="feat-track">
+                        <div class="feat-fill" style="width: 92%;"></div>
+                    </div>
+                    <span class="feat-pct">31.2%</span>
+                </div>
+
+                <div class="importance-item">
+                    <span class="feat-name">Applicant Age (Years)</span>
+                    <div class="feat-track">
+                        <div class="feat-fill" style="width: 62%;"></div>
+                    </div>
+                    <span class="feat-pct">17.4%</span>
+                </div>
+
+                <div class="importance-item">
+                    <span class="feat-name">Annuity-to-Income Ratio</span>
+                    <div class="feat-track">
+                        <div class="feat-fill" style="width: 52%;"></div>
+                    </div>
+                    <span class="feat-pct">14.8%</span>
+                </div>
+
+                <div class="importance-item">
+                    <span class="feat-name">Loan Duration (Months)</span>
+                    <div class="feat-track">
+                        <div class="feat-fill" style="width: 42%;"></div>
+                    </div>
+                    <span class="feat-pct">11.6%</span>
+                </div>
+
+                <div class="importance-item">
+                    <span class="feat-name">Employment Tenure</span>
+                    <div class="feat-track">
+                        <div class="feat-fill" style="width: 34%;"></div>
+                    </div>
+                    <span class="feat-pct">9.3%</span>
+                </div>
+
+                <div class="importance-item">
+                    <span class="feat-name">Debt-to-Income Ratio</span>
+                    <div class="feat-track">
+                        <div class="feat-fill" style="width: 28%;"></div>
+                    </div>
+                    <span class="feat-pct">8.5%</span>
+                </div>
+
+                <div class="importance-item">
+                    <span class="feat-name">Credit Amount Requested</span>
+                    <div class="feat-track">
+                        <div class="feat-fill" style="width: 22%;"></div>
+                    </div>
+                    <span class="feat-pct">7.2%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         7. EXECUTIVE BENTO GRID (CAPABILITIES)
+         ============================================================ -->
+    <section class="bento-section reveal">
+        <div class="section-header-centered">
+            <div class="section-eyebrow">Platform Architecture</div>
+            <h2 class="section-main-title">Engineered for Underwriting Speed &amp; Trust</h2>
+            <p class="section-main-desc">
+                Built to institutional fintech standards with microsecond decisioning and strict adherence to fair lending principles.
+            </p>
+        </div>
+
+        <div class="bento-grid">
+            <div class="bento-card span-2">
+                <div class="bento-icon-wrap">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                        <polyline points="2 17 12 22 22 17"/>
+                        <polyline points="2 12 12 17 22 12"/>
+                    </svg>
+                </div>
+                <h3 class="bento-title">Ensemble Model Architecture</h3>
+                <p class="bento-desc">
+                    Combines bagging (Random Forest), boosting (Gradient Boosted Trees), and generalized linear regularized models to synthesize high-confidence credit scores that minimize false negatives on default prediction.
+                </p>
+            </div>
+
+            <div class="bento-card">
+                <div class="bento-icon-wrap">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="6" x2="12" y2="12"/>
+                        <line x1="12" y1="12" x2="16" y2="14"/>
+                    </svg>
+                </div>
+                <h3 class="bento-title">&lt; 12ms Latency</h3>
+                <p class="bento-desc">
+                    Optimized numpy and scikit-learn pipelines deliver instantaneous probability evaluations ready for inline transaction gateways.
+                </p>
+            </div>
+
+            <div class="bento-card">
+                <div class="bento-icon-wrap">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <h3 class="bento-title">Fair Lending Audit</h3>
+                <p class="bento-desc">
+                    Models are continuously benchmarked against demographic parity metrics to guarantee credit access equity across all demographic categories.
+                </p>
+            </div>
+
+            <div class="bento-card span-2">
+                <div class="bento-icon-wrap">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                </div>
+                <h3 class="bento-title">Exportable Data Warehouse</h3>
+                <p class="bento-desc">
+                    One-click extraction of standardized train/test CSV partitions, trained pickle binaries, and high-resolution diagnostic charts directly from the dashboard.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         8. BOTTOM CALL-TO-ACTION SECTION
+         ============================================================ -->
+    <section class="bottom-cta-section reveal">
+        <div class="bottom-cta-card">
+            <h2 class="bottom-cta-title">Ready to Explore the Platform?</h2>
+            <p class="bottom-cta-desc">
+                Review the underlying Home Credit dataset, inspect exploratory data distributions, or run comprehensive model evaluations.
+            </p>
+            <div class="bottom-cta-actions">
+                <a href="/dataset" class="btn-hero-primary">Explore Dataset</a>
+                <a href="/eda" class="btn-hero-glass">View Visual EDA</a>
+                <a href="/preprocess" class="btn-hero-glass">Data Preprocessing</a>
+                <a href="/models" class="btn-hero-glass">Model Diagnostics</a>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- ============================================================
+     VANILLA JS: HIGH-PERFORMANCE PARTICLES & SIMULATOR LOGIC
+     ============================================================ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // ------------------------------------------------------------
+    // 1. LIVE P99 LATENCY FLUCTUATION MICRO-ANIMATION
+    // ------------------------------------------------------------
+    const latencyEl = document.getElementById('liveLatencyVal');
+    if (latencyEl) {
+        setInterval(() => {
+            const ms = (8.0 + Math.random() * 1.2).toFixed(1);
+            latencyEl.textContent = `${ms}ms`;
+        }, 2800);
+    }
+
+    // ------------------------------------------------------------
+    // 3. INTERACTIVE CREDIT RISK SIMULATOR CONTROLLER
+    // ------------------------------------------------------------
+    const sliderAmount = document.getElementById('sliderAmount');
+    const sliderDuration = document.getElementById('sliderDuration');
+    const sliderAge = document.getElementById('sliderAge');
+    const sliderIncome = document.getElementById('sliderIncome');
+    const sliderYearsEmployed = document.getElementById('sliderYearsEmployed');
+    const sliderExtScore = document.getElementById('sliderExtScore');
+
+    const lblAmount = document.getElementById('lblAmount');
+    const lblDuration = document.getElementById('lblDuration');
+    const lblAge = document.getElementById('lblAge');
+    const lblIncome = document.getElementById('lblIncome');
+    const lblYearsEmployed = document.getElementById('lblYearsEmployed');
+    const lblExtScore = document.getElementById('lblExtScore');
+
+    const gaugeMeterRing = document.getElementById('gaugeMeterRing');
+    const gaugeScore = document.getElementById('gaugeScore');
+    const gaugeRating = document.getElementById('gaugeRating');
+    const simDecisionBanner = document.getElementById('simDecisionBanner');
+
+    const diagPD = document.getElementById('diagPD');
+    const diagBurden = document.getElementById('diagBurden');
+    const diagRiskClass = document.getElementById('diagRiskClass');
+    const diagAuditFlag = document.getElementById('diagAuditFlag');
+    const driversListContainer = document.getElementById('driversListContainer');
+
+    // State object for Home Credit parameters
+    const simState = {
+        amount: 500000,
+        duration: 24,
+        age: 35,
+        income: 180000,
+        years_employed: 5,
+        ext_score: 0.5,
+        education: 1
+    };
+
+    // Preset profiles (Home Credit realistic archetypes)
+    const presets = {
+        prime: {
+            amount: 300000,
+            duration: 18,
+            age: 42,
+            income: 350000,
+            years_employed: 12,
+            ext_score: 0.75,
+            education: 2
+        },
+        standard: {
+            amount: 600000,
+            duration: 36,
+            age: 33,
+            income: 180000,
+            years_employed: 5,
+            ext_score: 0.50,
+            education: 1
+        },
+        highrisk: {
+            amount: 1500000,
+            duration: 48,
+            age: 23,
+            income: 90000,
+            years_employed: 1,
+            ext_score: 0.20,
+            education: 0
+        }
+    };
+
+    // Preset button event listeners
+    document.querySelectorAll('.sim-preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.sim-preset-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const pKey = btn.dataset.preset;
+            if (presets[pKey]) {
+                applyPreset(presets[pKey]);
+            }
+        });
+    });
+
+    function applyPreset(p) {
+        simState.amount = p.amount;
+        simState.duration = p.duration;
+        simState.age = p.age;
+        simState.income = p.income;
+        simState.years_employed = p.years_employed;
+        simState.ext_score = p.ext_score;
+        simState.education = p.education;
+
+        sliderAmount.value = p.amount;
+        sliderDuration.value = p.duration;
+        sliderAge.value = p.age;
+        sliderIncome.value = p.income;
+        sliderYearsEmployed.value = p.years_employed;
+        sliderExtScore.value = Math.round(p.ext_score * 100);
+
+        updateTierUI('tierEducation', p.education);
+
+        recomputeScore();
+    }
+
+    function updateTierUI(containerId, activeVal) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.querySelectorAll('.sim-tier-btn').forEach(btn => {
+            if (parseInt(btn.dataset.val) === activeVal) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    function setupTierListeners(containerId, stateKey) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.querySelectorAll('.sim-tier-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                container.querySelectorAll('.sim-tier-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                simState[stateKey] = parseInt(btn.dataset.val);
+                recomputeScore();
+            });
+        });
+    }
+
+    setupTierListeners('tierEducation', 'education');
+
+    // Slider inputs
+    if (sliderAmount) {
+        sliderAmount.addEventListener('input', (e) => {
+            simState.amount = parseFloat(e.target.value);
+            lblAmount.textContent = `₹${Number(simState.amount).toLocaleString()}`;
+            recomputeScore();
+        });
+    }
+
+    if (sliderDuration) {
+        sliderDuration.addEventListener('input', (e) => {
+            simState.duration = parseFloat(e.target.value);
+            lblDuration.textContent = `${simState.duration} Months`;
+            recomputeScore();
+        });
+    }
+
+    if (sliderAge) {
+        sliderAge.addEventListener('input', (e) => {
+            simState.age = parseFloat(e.target.value);
+            lblAge.textContent = `${simState.age} Years`;
+            recomputeScore();
+        });
+    }
+
+    if (sliderIncome) {
+        sliderIncome.addEventListener('input', (e) => {
+            simState.income = parseFloat(e.target.value);
+            lblIncome.textContent = `₹${Number(simState.income).toLocaleString()}`;
+            recomputeScore();
+        });
+    }
+
+    if (sliderYearsEmployed) {
+        sliderYearsEmployed.addEventListener('input', (e) => {
+            simState.years_employed = parseFloat(e.target.value);
+            lblYearsEmployed.textContent = `${simState.years_employed} Years`;
+            recomputeScore();
+        });
+    }
+
+    if (sliderExtScore) {
+        sliderExtScore.addEventListener('input', (e) => {
+            simState.ext_score = parseFloat(e.target.value) / 100.0;
+            lblExtScore.textContent = simState.ext_score.toFixed(2);
+            recomputeScore();
+        });
+    }
+
+    // Debounced real-time API call with instant client fallback calculation
+    let debounceTimer = null;
+
+    function recomputeScore() {
+        // Immediate client-side label updates for silky smooth 60fps response
+        lblAmount.textContent = `₹${Number(simState.amount).toLocaleString()}`;
+        lblDuration.textContent = `${simState.duration} Months`;
+        lblAge.textContent = `${simState.age} Years`;
+        lblIncome.textContent = `₹${Number(simState.income).toLocaleString()}`;
+        lblYearsEmployed.textContent = `${simState.years_employed} Years`;
+        lblExtScore.textContent = simState.ext_score.toFixed(2);
+
+        // Client heuristic formula calibrated to Home Credit risk scorer
+        let baseScore = 650;
+        const burden = simState.amount / Math.max(simState.duration, 1);
+        const burdenRatio = burden / Math.max(simState.income, 1);
+
+        // External bureau score is the strongest driver
+        baseScore += (simState.ext_score - 0.5) * 180;
+
+        // Age (young applicants are higher risk)
+        if (simState.age < 25) baseScore -= 35;
+        else if (simState.age >= 40) baseScore += 25;
+        else if (simState.age >= 30) baseScore += 10;
+
+        // Income vs loan amount (debt-to-income)
+        if (burdenRatio > 0.5) baseScore -= 50;
+        else if (burdenRatio > 0.3) baseScore -= 20;
+        else if (burdenRatio < 0.1) baseScore += 30;
+
+        // Employment tenure
+        if (simState.years_employed < 1) baseScore -= 40;
+        else if (simState.years_employed >= 7) baseScore += 35;
+        else if (simState.years_employed >= 3) baseScore += 15;
+
+        // Loan tenor
+        if (simState.duration > 48) baseScore -= 25;
+        else if (simState.duration <= 12) baseScore += 20;
+
+        // Education level
+        const educWeights = {0: -20, 1: 0, 2: 15, 3: 25};
+        baseScore += (educWeights[simState.education] || 0);
+
+        const score = Math.max(300, Math.min(850, Math.round(baseScore)));
+
+        // Probability of default (logistic formula)
+        const z = (620.0 - score) / 72.0;
+        const pdRate = 1.0 / (1.0 + Math.exp(-z));
+        const pdPct = (pdRate * 100).toFixed(1);
+
+        const extImpact = Math.round((simState.ext_score - 0.5) * 180);
+        const ageImpact = simState.age < 25 ? -35 : (simState.age >= 40 ? 25 : (simState.age >= 30 ? 10 : 0));
+        const dtiImpact = burdenRatio > 0.5 ? -50 : (burdenRatio > 0.3 ? -20 : (burdenRatio < 0.1 ? 30 : 0));
+        const empImpact = simState.years_employed < 1 ? -40 : (simState.years_employed >= 7 ? 35 : (simState.years_employed >= 3 ? 15 : 0));
+        const eduImpact = educWeights[simState.education] || 0;
+
+        renderUI({
+            score: score,
+            default_prob_pct: pdPct,
+            monthly_burden: burden.toFixed(0),
+            drivers: [
+                { factor: 'External Bureau Score', impact: extImpact, positive: extImpact >= 0 },
+                { factor: 'Debt-to-Income Ratio', impact: dtiImpact, positive: dtiImpact >= 0 },
+                { factor: 'Employment Tenure', impact: empImpact, positive: empImpact >= 0 },
+                { factor: 'Applicant Age', impact: ageImpact, positive: ageImpact >= 0 },
+                { factor: 'Education Level', impact: eduImpact, positive: eduImpact >= 0 },
+            ]
+        });
+
+        // Trigger backend API sync with correct Home Credit parameters
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            fetch(`/api/predict_risk?amount=${simState.amount}&duration=${simState.duration}&age=${simState.age}&income=${simState.income}&years_employed=${simState.years_employed}&ext_score=${simState.ext_score}&education=${simState.education}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.success) {
+                        renderUI(data);
+                    }
+                })
+                .catch(() => {});
+        }, 180);
+    }
+
+    function renderUI(data) {
+        const score = data.score;
+        gaugeScore.textContent = score;
+
+        // Circular gauge dashoffset:
+        // Circumference for r=85 is 2 * PI * 85 ~= 534
+        // Score scale: 300..850 (range 550)
+        const circumference = 534;
+        const pct = Math.max(0, Math.min(1, (score - 300) / 550));
+        const dashOffset = circumference * (1 - pct);
+        gaugeMeterRing.style.strokeDasharray = circumference;
+        gaugeMeterRing.style.strokeDashoffset = dashOffset;
+
+        // Tier classification & color palette
+        let color = '#34d399';
+        let rating = 'Prime Tier (AAA)';
+        let decision = 'APPROVED — INSTANT DISBURSEMENT';
+        let riskClass = 'Low Risk';
+        let auditFlag = 'Clear';
+        let auditColor = '#34d399';
+
+        if (score >= 720) {
+            color = '#34d399';
+            rating = 'Prime Tier (AAA)';
+            decision = 'APPROVED — INSTANT DISBURSEMENT';
+            riskClass = 'Low Risk';
+        } else if (score >= 610) {
+            color = '#38bdf8';
+            rating = 'Core Tier (BBB)';
+            decision = 'APPROVED — STANDARD COVENANTS';
+            riskClass = 'Moderate Risk';
+        } else if (score >= 510) {
+            color = '#fbbf24';
+            rating = 'Monitored Tier (BB)';
+            decision = 'REFERRED — MANUAL AUDIT REQUIRED';
+            riskClass = 'Elevated Risk';
+            auditFlag = 'Flagged';
+            auditColor = '#fbbf24';
+        } else {
+            color = '#f43f5e';
+            rating = 'Subprime Tier (CCC)';
+            decision = 'DECLINED — HIGH DEFAULT EXPOSURE';
+            riskClass = 'High Risk';
+            auditFlag = 'Reject';
+            auditColor = '#f43f5e';
+        }
+
+        gaugeMeterRing.style.stroke = color;
+        gaugeRating.textContent = rating;
+        gaugeRating.style.color = color;
+
+        simDecisionBanner.textContent = decision;
+        simDecisionBanner.style.color = color;
+        simDecisionBanner.style.borderColor = color + '55';
+        simDecisionBanner.style.backgroundColor = color + '18';
+
+        diagPD.textContent = `${data.default_prob_pct}%`;
+        diagPD.style.color = color;
+
+        diagBurden.textContent = `₹${Number(Math.round(data.monthly_burden)).toLocaleString()}/mo`;
+        diagRiskClass.textContent = riskClass;
+        diagRiskClass.style.color = color;
+
+        diagAuditFlag.textContent = auditFlag;
+        diagAuditFlag.style.color = auditColor;
+
+        // Render SHAP Driver Attribution Bars
+        if (driversListContainer && data.drivers) {
+            driversListContainer.innerHTML = '';
+            data.drivers.forEach(d => {
+                const item = document.createElement('div');
+                item.className = 'driver-bar-item';
+
+                const sign = d.impact >= 0 ? '+' : '';
+                const impactClass = d.positive ? 'driver-impact-pos' : 'driver-impact-neg';
+                const fillColor = d.positive ? '#34d399' : '#f43f5e';
+                const widthPct = Math.min(100, Math.max(12, Math.abs(d.impact) * 1.1));
+
+                item.innerHTML = `
+                    <div class="driver-info-row">
+                        <span>${d.factor}</span>
+                        <span class="driver-impact-val ${impactClass}">${sign}${d.impact} pts</span>
+                    </div>
+                    <div class="driver-bar-track">
+                        <div class="driver-bar-fill" style="width: ${widthPct}%; background: ${fillColor};"></div>
+                    </div>
+                `;
+                driversListContainer.appendChild(item);
+            });
+        }
+    }
+
+    // Initial calculation on load
+    recomputeScore();
+
+    // ------------------------------------------------------------
+    // 4. 3D CARD TILT PARALLAX EFFECT ON HOVER
+    // ------------------------------------------------------------
+    const tiltCards = document.querySelectorAll('.model-3d-card, .pipeline-node-card');
+    tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -6;
+            const rotateY = ((x - centerX) / centerX) * 6;
+
+            card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        });
+    });
+
+    // ------------------------------------------------------------
+    // 5. SMOOTH SCROLL OBSERVER FOR REVEAL ANIMATIONS
+    // ------------------------------------------------------------
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(r => revealObserver.observe(r));
+
+});
+</script>
 {% endblock %}

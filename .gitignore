@@ -9,3 +9,7 @@ __pycache__/
 # Excluded subfolders of src
 src/MLmodels/
 src/data/
+
+application_train.csv
+Data/application_train.csv
+run_all_models.py
