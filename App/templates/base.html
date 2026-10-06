@@ -30,14 +30,7 @@
     <!-- Apple-Style Global Navigation Bar (Flush Edge-to-Edge, Frosted Glass, Classic Class) -->
     <header class="apple-global-nav" id="appleGlobalNav">
         <div class="apple-nav-inner">
-            <a href="/" class="apple-nav-brand">
-                <span class="apple-brand-icon-wrap">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
-                        <path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/>
-                    </svg>
-                </span>
-                <span class="apple-brand-name">Credit Fair</span>
-            </a>
+            <div class="apple-nav-brand" style="visibility: hidden;"></div>
 
             <nav class="apple-nav-menu">
                 <a href="/" class="apple-nav-link {% if request.endpoint == 'home' %}active{% endif %}">Home</a>
@@ -47,14 +40,7 @@
                 <a href="/models" class="apple-nav-link {% if request.endpoint == 'models' %}active{% endif %}">Models</a>
             </nav>
 
-            <div class="apple-nav-right">
-                <a href="/dataset" class="apple-nav-cta-btn">
-                    <span>Explore Data</span>
-                    <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor">
-                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                    </svg>
-                </a>
-            </div>
+            <div class="apple-nav-right" style="visibility: hidden;"></div>
         </div>
     </header>
 

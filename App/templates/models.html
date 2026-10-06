@@ -108,6 +108,54 @@
         background: rgba(255, 255, 255, 0.12);
     }
 
+    /* Search Bar */
+    .search-container {
+        margin-bottom: 24px;
+        position: relative;
+        max-width: 400px;
+        animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .search-container input {
+        width: 100%;
+        padding: 12px 20px 12px 42px;
+        background: rgba(11, 18, 36, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        color: #fff;
+        font-family: var(--font-main);
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-container input::placeholder {
+        color: var(--text-muted);
+    }
+
+    .search-container input:focus {
+        border-color: rgba(56, 189, 248, 0.5);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(56, 189, 248, 0.2);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 15px;
+        pointer-events: none;
+        transition: color 0.3s ease;
+    }
+
+    .search-container input:focus + .search-icon {
+        color: #38bdf8;
+    }
+
     /* Floating Pill Tab Navigation */
     .tabs-dock {
         display: inline-flex;
@@ -966,6 +1014,12 @@
             <span class="spec-label">Peak Anomaly Default</span>
         </div>
     </div>
+</div>
+
+<!-- Search Bar -->
+<div class="search-container">
+    <input type="text" id="modelSearch" placeholder="Search models, algorithms, or metrics..." onkeyup="handleSearch()">
+    <span class="search-icon">🔍</span>
 </div>
 
 <!-- Floating Pill Tabs Dock -->
@@ -2013,6 +2067,33 @@ function switchModelTab(tabId, btnElement) {
     } else {
         const found = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
         if (found) found.classList.add('active');
+    }
+}
+
+function handleSearch() {
+    const query = document.getElementById('modelSearch').value.toLowerCase();
+    const tabs = document.querySelectorAll('.tab-btn');
+    let firstVisibleTab = null;
+    
+    tabs.forEach(btn => {
+        const tabId = btn.getAttribute('data-tab');
+        const pane = document.getElementById('tab-' + tabId);
+        
+        // Search across the pane content and tab name
+        const textContent = (pane.textContent + ' ' + btn.textContent).toLowerCase();
+        
+        if (textContent.includes(query)) {
+            btn.style.display = 'inline-flex';
+            if (!firstVisibleTab) firstVisibleTab = btn;
+        } else {
+            btn.style.display = 'none';
+        }
+    });
+    
+    // Automatically switch if the active tab is hidden by search
+    const activeBtn = document.querySelector('.tab-btn.active');
+    if (activeBtn && activeBtn.style.display === 'none' && firstVisibleTab) {
+        firstVisibleTab.click();
     }
 }
 </script>

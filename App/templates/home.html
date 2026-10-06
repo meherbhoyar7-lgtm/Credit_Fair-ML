@@ -8,70 +8,33 @@
          ============================================================ -->
     <section class="hero-executive-section" id="heroSection">
         <div class="hero-executive-content">
-            <!-- Pulsing Status Eyebrow -->
-            <div class="hero-beacon-pill">
-                <div class="beacon-dot-wrap">
-                    <span class="beacon-core"></span>
-                    <span class="beacon-wave"></span>
-                </div>
-                <span>Institutional Risk Engine · v2.4 Active</span>
-            </div>
+
 
             <!-- Main Metallic Shimmer Display Headline -->
             <h1 class="hero-executive-title">Credit Fair</h1>
+            <div class="hero-minimal-subtitle">INSTITUTIONAL RISK INTELLIGENCE</div>
 
-            <!-- Executive Subheadline -->
-            <p class="hero-executive-desc">
-                High-precision credit risk underwriting, portfolio risk grading, and explainable machine learning analytics engineered for <span class="hero-highlight">institutional banking</span> and capital allocation.
-            </p>
+
 
             <!-- Action Hub (Call-to-Action Buttons) -->
-            <div class="hero-cta-group">
+            <div class="hero-cta-group" style="justify-content: center;">
                 <a href="#simulatorSection" class="btn-hero-primary" id="btnLaunchSim">
                     <span>Launch Risk Simulator</span>
                     <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
                         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </a>
-                <a href="/models" class="btn-hero-glass">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                    <span>Inspect 15 Risk Models</span>
-                </a>
-                <a href="/dataset" class="btn-hero-glass">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        <line x1="3" y1="9" x2="21" y2="9"/>
-                        <line x1="9" y1="21" x2="9" y2="9"/>
-                    </svg>
-                    <span>Audit Dataset</span>
-                </a>
             </div>
 
-            <!-- Floating 3D Holographic Stat Badges -->
-            <div class="hero-floating-badges">
-                <div class="floating-badge-item">
-                    <span class="badge-icon">⚡</span>
-                    <span class="badge-val" id="liveLatencyVal">8.4ms</span>
-                    <span class="badge-lbl">P99 Latency</span>
-                </div>
-                <div class="floating-badge-item">
-                    <span class="badge-icon">🛡️</span>
-                    <span class="badge-val">98.4%</span>
-                    <span class="badge-lbl">ROC-AUC Bench</span>
-                </div>
-                <div class="floating-badge-item">
-                    <span class="badge-icon">📊</span>
-                    <span class="badge-val">1,000</span>
-                    <span class="badge-lbl">Audit Profiles</span>
-                </div>
-                <div class="floating-badge-item">
-                    <span class="badge-icon">⚖️</span>
-                    <span class="badge-val">Zero Bias</span>
-                    <span class="badge-lbl">Fair Lending</span>
-                </div>
-            </div>
+            <!-- Elegant Scroll Indicator -->
+            <a href="#simulatorSection" class="hero-scroll-indicator">
+                <span class="scroll-mouse">
+                    <span class="scroll-wheel"></span>
+                </span>
+                <span class="scroll-text">Discover</span>
+            </a>
+
+
         </div>
     </section>
 
@@ -1077,6 +1040,62 @@ document.addEventListener('DOMContentLoaded', function() {
             recomputeScore();
         });
     }
+
+    // ------------------------------------------------------------
+    // 3.5 EDITABLE BADGES ALLOWING MANUAL TYPING BEYOND SLIDER MAX
+    // ------------------------------------------------------------
+    const editableLabels = [
+        { el: lblAmount, key: 'amount', slider: sliderAmount },
+        { el: lblDuration, key: 'duration', slider: sliderDuration },
+        { el: lblAge, key: 'age', slider: sliderAge },
+        { el: lblIncome, key: 'income', slider: sliderIncome },
+        { el: lblYearsEmployed, key: 'years_employed', slider: sliderYearsEmployed },
+        { el: lblExtScore, key: 'ext_score', slider: sliderExtScore }
+    ];
+
+    editableLabels.forEach(obj => {
+        if (!obj.el) return;
+        
+        // Make badge natively editable
+        obj.el.contentEditable = true;
+        obj.el.spellcheck = false;
+        obj.el.title = "Click to type custom value";
+        
+        // Listen for user hitting enter to save & unfocus
+        obj.el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                obj.el.blur();
+            }
+        });
+        
+        // When typing is done (blur), parse the text and update simulation
+        obj.el.addEventListener('blur', () => {
+            let rawText = obj.el.textContent.replace(/[^0-9.]/g, '');
+            if (!rawText) {
+                recomputeScore(); // Reset to current state if empty
+                return;
+            }
+            
+            let val = parseFloat(rawText);
+            if (!isNaN(val)) {
+                // If they typed 75 into bureau score instead of 0.75, fix it
+                if (obj.key === 'ext_score' && val > 1) {
+                    val = val / 100.0;
+                }
+                
+                // Update internal state allowing limitless values
+                simState[obj.key] = val;
+                
+                // Try to update the slider visually (it will naturally cap at its max)
+                if (obj.slider) {
+                    obj.slider.value = (obj.key === 'ext_score') ? val * 100 : val;
+                }
+            }
+            // Trigger recalculation and UI sync
+            recomputeScore();
+        });
+    });
 
     // Debounced real-time API call with instant client fallback calculation
     let debounceTimer = null;

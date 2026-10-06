@@ -527,7 +527,7 @@ def models():
     joblib.dump({"model": km_optimal, "scaler": scaler}, os.path.join(models_dir, "kmeans.pkl"))
 
     # ===== 4. AGGLOMERATIVE HIERARCHICAL CLUSTERING =====
-    from src.MLmodels.Agglomerative_clustering import train_agglomerative
+    from src.MLmodels.Clustering_Models.Agglomerative_clustering import train_agglomerative
     agg_model, _, _, agg_clusters, agg_sil = train_agglomerative(X_cluster, n_clusters=3, linkage='ward')
     agglomerative_results = {
         "silhouette": round(agg_sil, 4),
@@ -623,7 +623,7 @@ def models():
 def api_predict_risk():
     """Scores an applicant with the Home Credit risk scorer (src/MLmodels/risk_scorer.py)."""
     try:
-        from src.MLmodels.risk_scorer import score_applicant
+        from src.MLmodels.Core_Application_Logic.risk_scorer import score_applicant
         data = request.get_json(silent=True) or request.args
         result = score_applicant(
             amount=float(data.get("amount", 500000)),
