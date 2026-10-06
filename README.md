@@ -1,4 +1,4 @@
-# Credit Fair 2.0 — Institutional Credit Risk & Underwriting Engine
+# Credit Fair — Institutional Credit Risk & Underwriting Engine
 
 An executive-grade machine learning platform and web intelligence terminal for consumer credit risk scoring, portfolio risk tiering, and explainable loan underwriting.
 
